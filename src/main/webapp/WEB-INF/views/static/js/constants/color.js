@@ -1,0 +1,4 @@
+const MAIN_COLOR = "#557B83";
+const HIGHLIGHT1 = "#39AEA9";
+const HIGHLIGHT2 = "#A2D5AB";
+const HIGHLIGHT3 = "#E5EFC1";
