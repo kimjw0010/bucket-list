@@ -1,0 +1,38 @@
+@import "./form.css";
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.5;
+  background-color: #f1f5f9;
+}
+
+main .wrapper {
+  width: 540px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  height: 5px;
+  background-color: lightgray;
+}
+
+button {
+  width: 60px;
+  line-height: inherit;
+  cursor: pointer;
+  height: auto;
+  border: none;
+  outline: none;
+  border-radius: 2rem;
+}
+
+a {
+  text-decoration: none;
+}
