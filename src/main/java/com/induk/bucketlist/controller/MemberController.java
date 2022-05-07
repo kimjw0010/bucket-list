@@ -16,13 +16,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/bucketlist/members")
 public class MemberController {
+
     private final MemberService memberService;
 
     @GetMapping("/login")
@@ -92,7 +91,6 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        //return "redirect:/csmovie";
-        return null;
+        return "redirect:/bucketlist";
     }
 }
