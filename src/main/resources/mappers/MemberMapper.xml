@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.induk.bucketlist.repository.MemberRepository">
     <resultMap id="memberResult" type="Member">
-        <id property="id" column="id" />
+        <id property="idx" column="idx" />
         <result property="email" column="email" />
         <result property="password" column="password" />
     </resultMap>
@@ -13,8 +13,8 @@
         select * from member
     </select>
 
-    <select id="findById" parameterType="Member" resultType="Member" resultMap="memberResult">
-        select * from member where id = #{id}
+    <select id="findByIdx" parameterType="Long" resultType="Member" resultMap="memberResult">
+        select * from member where idx = #{idx}
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="idx" parameterType="Member">
