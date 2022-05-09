@@ -1,7 +1,6 @@
 package com.induk.bucketlist.controller;
 
 import com.induk.bucketlist.service.BucketItemService;
-import com.induk.bucketlist.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

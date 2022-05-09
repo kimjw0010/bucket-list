@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.induk.bucketlist.repository.BucketItemRepository">
+<mapper namespace="com.induk.bucketlist.repository.CategoryRepository">
     <resultMap id="categoryResult" type="Category">
         <id property="idx" column="idx" />
         <result property="name" column="name" />
