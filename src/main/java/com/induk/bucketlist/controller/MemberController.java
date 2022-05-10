@@ -70,23 +70,22 @@ public class MemberController {
         return "redirect:/bucketlist";
     }
 
-//    @GetMapping("/signup")
-//    public String signupForm(Model model){
-//        model.addAttribute("member", new Member());
-//        return "/cinema/member/sign-up";
-//    }
+    @GetMapping("/signup")
+    public String signupForm(Model model){
+        return "memberJoin";
+    }
 
-//    @PostMapping("/signup")
-//    public String addMember(@Valid Member member,
-//                            BindingResult bindingResult) throws IOException {
-//        //형식
-//        if(bindingResult.hasErrors()) {
-//            return "/cinema/member/sign-up";
-//        }
-//
-//        memberService.saveMember(member);
-//        return "redirect:/csmovie/members/login";
-//    }
+    @PutMapping("/signup")
+    public String addMember(@Valid Member member,
+                            BindingResult bindingResult) throws IOException {
+        //형식
+        if(bindingResult.hasErrors()) {
+            return "redirect:/signup";
+        }
+
+        memberService.saveMember(member);
+        return "redirect:/";
+    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
