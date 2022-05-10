@@ -2,6 +2,7 @@ module.exports = {
   content: [
     "./src/main/resources/static/**/*.{js,jsx,ts,tsx}",
     "./src/main/resources/templates/**/*.html",
+    "./src/main/webapp/WEB-INF/views/**/*.jsp",
   ],
   theme: {
     extend: {
