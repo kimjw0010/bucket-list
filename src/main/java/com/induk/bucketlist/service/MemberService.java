@@ -22,12 +22,12 @@ public class MemberService {
         return memberRepository.findByIdx(idx);
     }
 
-    public Long saveMember(Member member) throws IOException {
+    public Long saveMember(Member member) {
         memberRepository.save(member);
         return member.getIdx();
     }
 
-    public int updateMember(Member member, String imageDel) throws IOException {
+    public int updateMember(Member member) {
         return memberRepository.update(member);
     }
 

@@ -1,0 +1,7 @@
+CREATE TABLE `category` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(16) DEFAULT NULL,
+  `scr` varchar(128) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

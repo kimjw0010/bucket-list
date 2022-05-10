@@ -1,0 +1,10 @@
+CREATE TABLE `bucket_list` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `category_idx` int DEFAULT NULL,
+  `title` varchar(64) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `completion_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`idx`),
+  KEY `category_idx` (`category_idx`),
+  CONSTRAINT `bucket_list_ibfk_2` FOREIGN KEY (`category_idx`) REFERENCES `category` (`idx`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
