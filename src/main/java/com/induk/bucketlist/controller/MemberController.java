@@ -78,6 +78,7 @@ public class MemberController {
     @PutMapping("/signup")
     public String addMember(@Valid Member member,
                             BindingResult bindingResult) throws IOException {
+        System.out.println("'hello'");
         //형식
         if(bindingResult.hasErrors()) {
             return "redirect:/signup";

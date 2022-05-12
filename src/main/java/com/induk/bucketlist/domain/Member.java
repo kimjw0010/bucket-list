@@ -21,4 +21,14 @@ public class Member {
     @NotBlank(message = "비밀번호는 필수 입력입니다.")
     @Length(max=20)
     private String password;
+
+    @NotBlank(message = "이름을 입력해 주세요.")
+    @Length(max=6)
+    private String name;
+
+    private int allAgree;
+
+    private int newsAgree;
+
+    private int conditionAgree;
 }
