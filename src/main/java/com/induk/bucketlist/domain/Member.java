@@ -1,20 +1,16 @@
 package com.induk.bucketlist.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-
     private Long idx;
 
     @NotBlank(message = "이메일은 필수 입력입니다.")
@@ -25,4 +21,14 @@ public class Member {
     @NotBlank(message = "비밀번호는 필수 입력입니다.")
     @Length(max=20)
     private String password;
+
+    @NotBlank(message = "이름을 입력해 주세요.")
+    @Length(max=6)
+    private String name;
+
+    private int allAgree;
+
+    private int newsAgree;
+
+    private int conditionAgree;
 }

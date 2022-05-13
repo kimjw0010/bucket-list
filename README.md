@@ -14,7 +14,7 @@ DB설정은 각자 로컬 상황에 맞게 수정해야 합니다. <br>
 username, password, url은 데이터베이스명 bucketlist 확인 <br>
 
 <br>
-@DeleteMapping 사용하기 위해 추가 <br>
+@DeleteMapping, @PutMapping 사용하기 위해 추가 <br>
 spring.mvc.hiddenmethod.filter.enabled <br>
 
 <br>
