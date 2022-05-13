@@ -72,20 +72,20 @@ public class MemberController {
 
     @GetMapping("/signup")
     public String signupForm(Model model){
-        model.addAttribute("member", new Member());
-        return "/bucketlist/member/sign-up";
+        return "memberJoin";
     }
 
-    @PostMapping("/signup")
+    @PutMapping("/signup")
     public String addMember(@Valid Member member,
                             BindingResult bindingResult) throws IOException {
-        //형식 오류
+        System.out.println("'hello'");
+        //형식
         if(bindingResult.hasErrors()) {
-            return "/bucketlist/member/sign-up";
+            return "redirect:/signup";
         }
 
         memberService.saveMember(member);
-        return "redirect:/bucketlist/members/login";
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
