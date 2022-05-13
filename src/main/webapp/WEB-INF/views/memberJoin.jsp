@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="<c:url value="/css/index.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/form.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/dist/output.css"/>"/>
     <title>회원가입</title>
 </head>
 <body>
@@ -62,7 +63,7 @@
                 <div class="mb-5">
                     <div class="mb-6" id="member-agree-select">
                         <input type="checkbox" name="allAgree" id="member-agree-all" class="mb-3 font-bold"/>
-                        모두 동의하기
+                        <strong>모두 동의하기</strong>
                         <br/>
                         <input type="checkbox" name="conditionAgree" class="mb-3"/>
                         이용약관, 개인정보처리방침에 동의합니다.<br/>
@@ -73,6 +74,7 @@
                             class="input-submit bg-mainGreen2-100 hover:bg-mainGreen2-200 text-white mb-10">
                         회원가입하고 Bucket 이용하기
                     </button>
+
                 </div>
             </div>
         </form>
