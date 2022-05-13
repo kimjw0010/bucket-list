@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build-css": "../../../../node_modules/.bin/postcss src/main/resources/static/css/tailwind.css -o src/main/resources/static/dist/output.css --watch --verbose"
+    "build-css": "postcss ./css/tailwind.css -o ./dist/output.css --watch --verbose"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.6",
