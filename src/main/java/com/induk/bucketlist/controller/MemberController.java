@@ -27,7 +27,7 @@ public class MemberController {
     @GetMapping("/login")
     public String login(Model model, @ModelAttribute("historyUrl") HistoryUrl historyUrl){
         model.addAttribute("member", new Member());
-        return "/bucketlist/member/sign-in";
+        return "memberLogin";
     }
 
     @PostMapping("/login")
@@ -44,7 +44,7 @@ public class MemberController {
 
         // email 형식이 맞지 않으면
         if(bindingResult.hasFieldErrors("email")) {
-            return "/bucketlist/member/sign-in";
+            return "memberLogin";
         }
 
         // email password에 맞는 member가 없을 때
