@@ -20,11 +20,11 @@
 </head>
 <body>
 <header>
-    <nav class="relative px-6 flex justify-between items-center bg-white drop-shadow-sm">
-        <a href="<c:url value="/"/>" class="nav-responsive">
+    <nav class="relative px-6 xl:px-52 flex justify-between items-center bg-white drop-shadow-sm">
+        <a href="<c:url value="/"/>">
             <img src="<c:url value="/images/logo-s.png"/>" alt="logo" class="w-40 h-auto m-1"/>
         </a>
-        <div class="nav-responsive">
+        <div>
             <a class="px-6 py-3 m-1 mb-3 leading-loose text-sm text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
                href="#">
                 로그인
@@ -80,7 +80,6 @@
         </form>
     </div>
 </main>
-<script type="module" src="<c:url value="/js/window.js"/>"></script>
 <script type="module" src="<c:url value="/js/memberAgree.js"/>"></script>
 </body>
 </html>
