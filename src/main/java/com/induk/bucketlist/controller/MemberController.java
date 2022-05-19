@@ -26,8 +26,9 @@ public class MemberController {
 
     @GetMapping("/login")
     public String login(Model model, @ModelAttribute("historyUrl") HistoryUrl historyUrl){
+        System.out.println("login get");
         model.addAttribute("member", new Member());
-        return "memberLogin";
+        return "/bucketlist/member/memberLogin";
     }
 
     @PostMapping("/login")
@@ -36,6 +37,7 @@ public class MemberController {
                         @ModelAttribute("historyUrl") HistoryUrl historyUrl,
                         HttpSession session, HttpServletRequest request,
                         HttpServletResponse response) throws IOException {
+        System.out.println("login post");
         Member m = memberService.login(member);
         // 쿠키에 입력받은 member의 email 저장
         Cookie cookie = new Cookie("email", member.getEmail());
@@ -44,7 +46,8 @@ public class MemberController {
 
         // email 형식이 맞지 않으면
         if(bindingResult.hasFieldErrors("email")) {
-            return "memberLogin";
+            System.out.println("login error type");
+            return "/bucketlist/member/memberLogin";
         }
 
         // email password에 맞는 member가 없을 때
@@ -72,24 +75,45 @@ public class MemberController {
 
     @GetMapping("/signup")
     public String signupForm(Model model){
-        return "memberJoin";
+        System.out.println("singup get");
+        model.addAttribute("member", new Member());
+        return "/bucketlist/member/memberJoin";
     }
 
-    @PutMapping("/signup")
-    public String addMember(@Valid Member member,
-                            BindingResult bindingResult) throws IOException {
-        System.out.println("'hello'");
+    @PostMapping("/signup")
+    public String addMember(@Valid Member member, BindingResult bindingResult, HttpServletRequest request,
+                            HttpServletResponse response, @ModelAttribute("historyUrl") HistoryUrl historyUrl
+                            ) throws IOException {
+        System.out.println("singup post");
         //형식
         if(bindingResult.hasErrors()) {
-            return "redirect:/signup";
+            System.out.println("singup error type");
+            return "/bucketlist/member/memberJoin";
         }
 
-        memberService.saveMember(member);
-        return "redirect:/";
+        int num = memberService.checkDuplicateEmail(member.getEmail());
+        System.out.println(num);
+        if(num > 0){
+            request.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter writer;
+            writer = response.getWriter();
+            writer.print("<script language='JavaScript' charset='UTF-8'>");
+            writer.print("alert('이메일이 중복됩니다.');");
+            writer.print("location.href='/bucketlist/members/signup?" + historyUrl.getParam() + "';");
+            writer.print("</script>");
+            writer.close();
+        } else {
+            System.out.println("will save");
+            memberService.saveMember(member);
+        }
+
+        return "redirect:/bucketlist/members/login";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
+        System.out.println("logout get");
         session.invalidate();
         return "redirect:/bucketlist";
     }
