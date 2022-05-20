@@ -19,20 +19,28 @@ main .wrapper {
   border-radius: 4px;
 }
 
+header {
+  width: auto;
+  height: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  height: 50px;
+}
+
+.container {
+  min-height: 100%;
+  margin-top: -100px;
+  padding-top: 50px;
+  /* margin: -100px 0 -50px; */
+}
+
 hr {
   border: 0;
   height: 5px;
   background-color: lightgray;
-}
-
-button {
-  width: 60px;
-  line-height: inherit;
-  cursor: pointer;
-  height: auto;
-  border: none;
-  outline: none;
-  border-radius: 2rem;
 }
 
 a {
