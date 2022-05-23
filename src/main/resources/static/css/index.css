@@ -21,7 +21,7 @@ main .wrapper {
 
 header {
   width: auto;
-  height: 100px;
+  height: 85px;
   position: relative;
   z-index: 1;
 }
@@ -32,9 +32,9 @@ footer {
 
 .container {
   min-height: 100%;
-  margin-top: -100px;
+  margin-top: -85px;
   padding-top: 50px;
-  /* margin: -100px 0 -50px; */
+  /* margin: -85px 0 -50px; */
 }
 
 hr {
@@ -45,4 +45,13 @@ hr {
 
 a {
   text-decoration: none;
+}
+
+.btn {
+  height: 48px;
+  min-width: 120px;
+  padding: 0 16px;
+  border-radius: 4px;
+  outline: 0;
+  border-style: none;
 }

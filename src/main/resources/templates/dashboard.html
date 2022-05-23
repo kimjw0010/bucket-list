@@ -1,171 +1,236 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/index.css" />
-    <link rel="stylesheet" href="../static/dist/output.css" />
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
-    <title>대시보드</title>
-  </head>
-  <body>
-    <header>
-      <nav
-        class="relative px-6 xl:px-52 flex justify-between items-center bg-white drop-shadow-sm"
-      >
-        <a href="./index.html">
-          <img
-            src="../static/images/logo-s.png"
-            alt="logo"
-            class="w-40 h-auto m-1"
-          />
-        </a>
-        <div class="flex items-center">
-          <!-- user menu -->
-          <div
-            class="mr-4 h-12 w-12 inline-block relative"
-            x-data="{ showMenu : false }"
-            @click.away="showMenu = false"
-          >
-            <div
-              class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
-              style="
-                background-image: url('https://ui-avatars.com/api/?name=G&color=7F9CF5&background=EBF4FF');
-              "
-              b
-              :class="{ 'border-indigo-100' : showMenu }"
-              @click="showMenu = !showMenu"
-            ></div>
 
-            <div
-              x-show="showMenu"
-              class="bg-white border border-gray-200 absolute left-0 top-14 w-80 shadow-lg rounded-xl"
-              x-transition:enter="transition ease duration-100 transform"
-              x-transition:enter-start="opacity-0 scale-90 translate-y-1"
-              x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-              x-transition:leave="transition ease duration-100 transform"
-              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-              x-transition:leave-end="opacity-0 scale-90 translate-y-1"
-            >
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../static/css/index.css" />
+  <link rel="stylesheet" href="../static/dist/output.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <title>대시보드</title>
+</head>
+
+<body>
+  <header>
+    <nav class="relative h-full px-6 xl:px-52 flex justify-between items-center bg-white drop-shadow-sm">
+      <a href="./index.html">
+        <img src="../static/images/logo-s.png" alt="logo" class="w-40 h-auto m-1" />
+      </a>
+      <div class="flex items-center">
+
+        <a class="w-24 px-5 py-2 m-1 leading-loose text-sm text-center bg-gray-50 hover:bg-gray-100 rounded-xl"
+          href="#">
+          로그인
+        </a>
+        <a class="w-24 px-5 py-2 m-1 leading-loose text-sm text-center text-white bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
+          href="#">회원가입</a>
+        <!-- user menu -->
+        <div class="mx-4 h-12 w-12 inline-block relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
+          <div
+            class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
+            style="
+                background-image: url('https://ui-avatars.com/api/?name=G&color=7F9CF5&background=EBF4FF');
+              " b :class="{ 'border-indigo-100' : showMenu }" @click="showMenu = !showMenu"></div>
+
+          <div x-show="showMenu"
+            class="bg-white border border-gray-200 absolute right-0 top-14 w-80 shadow-lg rounded-xl"
+            x-transition:enter="transition ease duration-100 transform"
+            x-transition:enter-start="opacity-0 scale-90 translate-y-1"
+            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+            x-transition:leave="transition ease duration-100 transform"
+            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+            x-transition:leave-end="opacity-0 scale-90 translate-y-1">
+            <div class="p-6 flex items-center justify-center border-b border-gray-200 w-full flex-col">
               <div
-                class="p-6 flex items-center justify-center border-b border-gray-200 w-full flex-col"
-              >
-                <div
-                  class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center"
-                  style="
+                class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center"
+                style="
                     background-image: url('https://ui-avatars.com/api/?name=G&color=7F9CF5&background=EBF4FF');
-                  "
-                ></div>
-                <div class="mt-6 text-center">
-                  <div class="font-bold">Guest</div>
-                  <div class="text-gray-500 text-sm">guest@gmail.com</div>
-                </div>
-                <div class="mt-6">
-                  <button
-                    class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo"
-                  >
-                    Settings
-                  </button>
-                </div>
+                  "></div>
+              <div class="mt-6 text-center">
+                <div class="font-bold">Guest</div>
+                <div class="text-gray-500 text-sm">guest@gmail.com</div>
               </div>
-              <div class="border-b border-gray-200 text-sm text-center">
-                <a
-                  href="#"
-                  class="px-3 py-4 block hover:bg-gray-50 transition-colors duration-150 ease-linear"
-                  >🚀Dash Board</a
-                >
-              </div>
-              <div class="border-b border-gray-200 p-4 text-center">
+              <div class="mt-6">
                 <button
-                  class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo"
-                >
-                  Logout
+                  class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
+                  설정
                 </button>
               </div>
-              <div class="p-4 text-xs text-center">
-                <a
-                  class="hover:underline hover:text-indigo-500 transition-colors duration-150 ease-linear"
-                  href="#"
-                  >Privacy</a
-                >
-              </div>
+            </div>
+            <div class="border-b border-gray-200 text-sm text-center">
+              <a href="#" class="px-3 py-4 block hover:bg-gray-50 transition-colors duration-150 ease-linear">🚀
+                대시보드</a>
+            </div>
+            <div class="border-b border-gray-200 p-4 text-center">
+              <button
+                class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
+                로그아웃
+              </button>
+            </div>
+            <div class="p-4 text-xs text-center">
+              <a class="hover:underline hover:text-indigo-500 transition-colors duration-150 ease-linear"
+                href="#">이용약관</a>
             </div>
           </div>
-          <a
-            class="px-6 py-3 m-1 mb-3 leading-loose text-sm text-center bg-gray-50 hover:bg-gray-100 rounded-xl"
-            href="#"
-          >
-            로그인
-          </a>
-          <a
-            class="px-6 py-3 m-1 mb-2 leading-loose text-sm text-center text-white bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
-            href="#"
-            >회원가입</a
-          >
         </div>
-      </nav>
-    </header>
-    <main>
-      <section>
-        <div class="container flex flex-wrap items-center ml-6">
-          <div
-            class="relative w-full xl:w-1/4 mt-44 bg-white shadow-lg transform duration-200 easy-in-out"
-          >
-            <div class="flex justify-center px-5 -mt-20">
-              <div class="relative">
-                <img
-                  class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
-                  src="../static/images/profile-sample.jpg"
-                  alt="profile"
-                />
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="flex flex-wrap justify-center max-h-screen mx-20">
+      <div class="w-full lg:w-1/4">
+        <aside>
+          <div class="container flex flex-wrap items-center ">
+            <div class="w-full mt-44 bg-white shadow-lg transform duration-200 ease-in-out">
+              <div class="flex justify-center px-5 -mt-20">
+                <div>
+                  <img class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
+                    src="../static/images/profile-sample.jpg" alt="profile" />
+                </div>
               </div>
-            </div>
 
-            <div class="w-full px-4 text-center mt-4">
-              <div class="text-center px-14">
-                <h2 class="text-gray-800 mt-3 text-3xl font-bold">Guest</h2>
-                <p class="text-gray-400 mt-3">guest@gmail.com</p>
-                <p class="text-gray-600 mt-3 mb-16">
-                  아무리 가까운 길이라도 가지 않으면 도달하지 못하고 아무리 쉬운
-                  일이라도 하지 않으면 이루지 못한다.
-                </p>
-              </div>
-              <div class="p-3 text-center">
-                <span
-                  class="mb-3 text-4xl font-bold block tracking-wide text-gray-600"
-                >
-                  3
-                </span>
-                <span class="mb-3 text-lg block text-gray-400"
-                  >Totals your Bucket List</span
-                >
-              </div>
-              <div class="flex justify-center py-4 lg:pt-4 pt-8 mb-10">
-                <div class="mr-2 p-3 text-center">
-                  <span
-                    class="text-xl font-bold block tracking-wide text-gray-600"
-                  >
-                    2
-                  </span>
-                  <span class="text-sm text-red-400">Activated</span>
+              <div class="w-full px-4 text-center my-10">
+                <div class="text-center px-14">
+                  <h2 class="text-gray-800 mt-3 text-3xl font-bold">Guest</h2>
+                  <p class="text-gray-400 mt-3">guest@gmail.com</p>
+                  <p class="text-gray-600 mt-3 mb-16">
+                    아무리 가까운 길이라도 가지 않으면 도달하지 못하고 아무리 쉬운
+                    일이라도 하지 않으면 이루지 못한다.
+                  </p>
                 </div>
                 <div class="p-3 text-center">
-                  <span
-                    class="text-xl font-bold block tracking-wide text-gray-600"
-                  >
-                    1
+                  <span class="mb-3 text-4xl font-bold block tracking-wide text-gray-600">
+                    3
                   </span>
-                  <span class="text-sm text-green-500">Completed</span>
+                  <span class="mb-3 text-lg block text-gray-400">Totals your Bucket List</span>
+                </div>
+                <div class="flex justify-center py-4 lg:pt-4 pt-8">
+                  <div class="mr-2 p-3 text-center">
+                    <span class="text-xl font-bold block tracking-wide text-gray-600">
+                      2
+                    </span>
+                    <span class="text-sm text-red-400">Activated</span>
+                  </div>
+                  <div class="p-3 text-center">
+                    <span class="text-xl font-bold block tracking-wide text-gray-600">
+                      1
+                    </span>
+                    <span class="text-sm text-green-500">Completed</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
-  </body>
+        </aside>
+      </div>
+      <div class="w-full lg:w-3/4 mt-4">
+        <section class="flex flex-col h-full">
+          <nav class="flex justify-center flex-wrap mt-7">
+            <button data-category-name="all" class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              🗒️ 전체
+            </button>
+            <button data-category-name="travel"
+              class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              ✈️ 여행
+            </button>
+            <button data-category-name="challenge"
+              class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              ⛷️ 도전
+            </button>
+            <button data-category-name="exprience"
+              class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              💐 경험
+            </button>
+            <button data-category-name="skill"
+              class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              ⚒️ 기술
+            </button>
+            <button data-category-name="education"
+              class="btn bg-white focus:text-white focus:bg-mainGreen3 shadow mx-4 mt-2">
+              🎓 교육
+            </button>
+          </nav>
+          <div class="flex flex-col flex-grow items-center bg-white mt-10 mx-10 py-4 shadow-lg">
+            <button
+              class="w-1/2 p-2 border border-white rounded-lg bg-mainGreen2-100 hover:bg-mainGreen2-200 text-white">
+              <i class="fa-solid fa-plus"></i>
+              새로운 버킷 리스트 추가하기
+            </button>
+            <div aria-label="group of cards" tabindex="0" class="focus:outline-none px-4 pt-7 w-full">
+              <div class="w-full">
+                <div aria-label="card 1" tabindex="0" class="focus:outline-none mb-6 bg-white p-6 shadow rounded">
+                  <div class="flex items-center pb-4">
+                    <img
+                      src="https://images.unsplash.com/photo-1604175287072-b5e71423060c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687"
+                      alt="bucketImg" class="w-16 h-16 rounded-full" />
+                    <div class="flex items-start justify-between w-full">
+                      <div class="pl-4 w-full">
+                        <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
+                          에펠탑 앞에서 사진 찍기</p>
+                        <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
+                          2022.05.23</p>
+                        <div tabindex="0" class="focus:outline-none flex pt-2">
+                          <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">✈️ 여행
+                          </div>
+                        </div>
+                      </div>
+                      <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div aria-label="card 2" tabindex="0" class="focus:outline-none mb-6 bg-white p-6 shadow rounded">
+                  <div class="flex items-center pb-4">
+                    <img
+                      src="https://images.unsplash.com/photo-1615791287388-6f1bd87ace4e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176"
+                      alt="bucketImg" class="w-16 h-16 rounded-full" />
+                    <div class="flex items-start justify-between w-full">
+                      <div class="pl-4 w-full">
+                        <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
+                          한 달에 책 한 권 읽기</p>
+                        <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
+                          2022.01.28</p>
+                        <div tabindex="0" class="focus:outline-none flex pt-2">
+                          <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">⛷️ 도전
+                          </div>
+                        </div>
+                      </div>
+                      <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div aria-label="card 3" tabindex="0" class="focus:outline-none mb-6 bg-white p-6 shadow rounded">
+                  <div class="flex items-center pb-4">
+                    <img
+                      src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332"
+                      alt="bucketImg" class="w-16 h-16 rounded-full" />
+                    <div class="flex items-start justify-between w-full">
+                      <div class="pl-4 w-full">
+                        <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
+                          파이썬 배우기</p>
+                        <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
+                          2022.02.11</p>
+                        <div tabindex="0" class="focus:outline-none flex pt-2">
+                          <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">🎓 교육
+                          </div>
+                        </div>
+                      </div>
+                      <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  </main>
+</body>
+
 </html>
