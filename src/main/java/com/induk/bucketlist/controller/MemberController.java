@@ -3,7 +3,10 @@ package com.induk.bucketlist.controller;
 import com.induk.bucketlist.domain.Member;
 import com.induk.bucketlist.dto.HistoryUrl;
 import com.induk.bucketlist.service.MemberService;
+import com.induk.bucketlist.util.FileStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ import java.io.PrintWriter;
 public class MemberController {
 
     private final MemberService memberService;
+    private final FileStore fileStore;
 
     @GetMapping("/login")
     public String login(Model model, @ModelAttribute("historyUrl") HistoryUrl historyUrl){
@@ -70,7 +75,7 @@ public class MemberController {
         if(!historyUrl.getHistoryUrl().isEmpty() && historyUrl.getHistoryUrl() != ""){
             return "redirect:" + historyUrl.getURL();
         }
-        return "redirect:/bucketlist";
+        return "redirect:/bucketlist/dashboard";
     }
 
     @GetMapping("/signup")
@@ -109,6 +114,55 @@ public class MemberController {
         }
 
         return "redirect:/bucketlist/members/login";
+    }
+
+    @GetMapping("/edit")
+    public String updateForm(HttpSession session, Model model){
+        Member m = (Member)session.getAttribute("member");
+        model.addAttribute("member", memberService.findMember(m.getIdx()));
+        return "/bucketlist/members/editForm";
+    }
+
+    @PostMapping("/edit")
+    public String updateForm(HttpSession session, @Valid Member member,
+                             BindingResult bindingResult, HttpServletResponse response,
+                             @RequestParam(value = "imageDel", required = false) String imageDel) throws IOException {
+
+        Member sessionMember = (Member)session.getAttribute("member");
+        Member m = memberService.findMember(sessionMember.getIdx());
+
+        member.setEmail(m.getEmail());
+        member.setImage(m.getImage());
+        member.setIdx(m.getIdx());
+        //형식 검사
+        if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")) {
+            return "/bucketlist/members/editForm";
+        }
+        if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
+        System.out.println("\n\n\n request m:"+member.getPassword());
+        System.out.println("\n\n\n session m:"+m.getPassword());
+
+        int result = memberService.updateMember(member, imageDel);
+
+        if(result >0) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('수정되었습니다'); location.href='/bucketlist/members/editForm';</script>");
+            out.flush();
+        }
+        else{
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('수정에 실패하였습니다.'); location.href='/bucketlist/members/editForm';</script>");
+            out.flush();
+        }
+        return "redirect:/bucketlist/members/edit";
+    }
+
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath("member", filename));
     }
 
     @GetMapping("/logout")

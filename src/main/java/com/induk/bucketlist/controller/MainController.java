@@ -16,7 +16,8 @@ public class MainController {
 
     @RequestMapping
     public String home(Model model) {
-       return "index";
+        System.out.println("test");
+        return "index";
     }
 
 }

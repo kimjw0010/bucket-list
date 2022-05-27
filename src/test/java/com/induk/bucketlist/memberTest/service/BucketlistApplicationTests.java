@@ -3,6 +3,7 @@ package com.induk.bucketlist.memberTest.service;
 import com.induk.bucketlist.domain.Member;
 import com.induk.bucketlist.repository.MemberRepository;
 import com.induk.bucketlist.service.MemberService;
+import com.induk.bucketlist.util.FileStore;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.lang.model.SourceVersion;
 
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,6 +56,14 @@ class BucketlistApplicationTests {
 		List<Member> list = memberRepository.findAll();
 
 		System.out.println(list.get(1).getEmail());
+	}
+
+	@Test
+	public void showDir() {
+		FileStore fs = new FileStore();
+
+		String test = fs.getFullPath("member", "test");
+		System.out.println("test = " + test);
 	}
 
 }

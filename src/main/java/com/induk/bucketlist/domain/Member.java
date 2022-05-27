@@ -2,6 +2,7 @@ package com.induk.bucketlist.domain;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -30,4 +31,8 @@ public class Member {
     private int newsAgree;
 
     private int conditionAgree;
+
+
+    private String image;
+    private MultipartFile imageForm;
 }
