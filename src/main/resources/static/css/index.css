@@ -1,5 +1,6 @@
 @import "./form.css";
 @import "./filebox.css";
+@import "./category.css";
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 html,
@@ -55,4 +56,8 @@ a {
   border-radius: 4px;
   outline: 0;
   border-style: none;
+}
+
+.font-awesome {
+  font-family: "Helvetica", FontAwesome, sans-serif;
 }
