@@ -35,37 +35,37 @@
                 이번 생에는 꼭 이루고 싶은 나의 버킷리스트를 작성해보세요.
             </p>
 
-            <form class="mt-5">
+            <form class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
                 <div>
                     <label for="bucket-title"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">제목</label>
-                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket-title"
+                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket-title"name="title"
                            class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40">
                 </div>
 
                 <div class="mt-4">
                     <label for="bucket-category"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">카테고리</label>
-                    <select id="bucket-category"
+                    <select id="bucket-category" name="category_idx"
                             class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40">
-                        <option>✈️ 여행</option>
-                        <option>⛷️ 도전</option>
-                        <option>💐 경험</option>
-                        <option>⚒️ 기술</option>
-                        <option>🎓 교육</option>
+                        <option value="1">✈️ 여행</option>
+                        <option value="2">⛷️ 도전</option>
+                        <option value="3">💐 경험</option>
+                        <option value="4">⚒️ 기술</option>
+                        <option value="5">🎓 교육</option>
                     </select>
                 </div>
 
                 <div class="mt-4">
                     <label for="bucket-image" class="block text-md text-gray-700 capitalize dark:text-gray-200">대표
                         이미지</label>
-                    <input
+                    <input type="file"
                             class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40"
-                            id="bucket-image" type="file">
+                            id="bucket-image" name="imageForm" accept="image/gif, image/bmp, image/png, image/jpeg">
                 </div>
 
                 <div class="flex justify-end mt-6">
-                    <button type="button"
+                    <button type="submit"
                             class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-mainGreen2-100 rounded-md hover:bg-mainGreen2-200 focus:outline-none focus:bg-mainGreen2-200 focus:ring focus:ring-mainGreen3 focus:ring-opacity-50">
                         추가
                     </button>

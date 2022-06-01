@@ -30,11 +30,24 @@
         <div class="col-start-2 row-start-1 row-span-3 justify-self-center">
             <img src="<c:url value="/images/main-sample.png"/>" alt="main"/>
         </div>
-        <div class="row-span-1">
-            <a class="px-6 py-3 m-1 mb-2 leading-loose text-sm md:text-base xl:text-xl text-center text-white font-semibold bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
-               href="<c:url value="/bucketlist/members/signup"/>"
-            >가입하고 버킷리스트 달성하기</a>
-        </div>
+        <c:choose>
+            <c:when test="${empty sessionScope.member}">
+                <div class="row-span-1">
+                    <a class="px-6 py-3 m-1 mb-2 leading-loose text-sm md:text-base xl:text-xl text-center text-white font-semibold bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
+                       href="<c:url value="/bucketlist/members/signup"/>"
+                    >가입하고 버킷리스트 달성하기</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="row-span-1">
+                    <a class="px-6 py-3 m-1 mb-2 leading-loose text-sm md:text-base xl:text-xl text-center text-white font-semibold bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
+                       href="<c:url value="/bucketlist/dashboard"/>"
+                    >버킷리스트 목록으로 이동하기</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
+
     </div>
 </main>
 </body>

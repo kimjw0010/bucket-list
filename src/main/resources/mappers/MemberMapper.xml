@@ -7,6 +7,9 @@
         <id property="idx" column="idx" />
         <result property="email" column="email" />
         <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="src" column="src" />
+        <result property="info" column="info" />
     </resultMap>
 
     <select id="findAll" resultType="Member" resultMap="memberResult">
@@ -18,13 +21,13 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="idx" parameterType="Member">
-        insert into member(email, password)
-        values (#{email}, #{password})
+        insert into member(email, password, name, src, info)
+        values (#{email}, #{password}, #{name}, #{src}, #{info})
     </insert>
 
     <update id="update" parameterType="Member">
         update member
-        set email=#{email}, password=#{password}
+        set email=#{email}, password=#{password}, name=#{name}, src=#{src}, info=#{info}
         where idx=#{idx}
     </update>
 

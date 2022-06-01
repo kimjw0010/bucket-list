@@ -12,18 +12,35 @@
                     <div class="w-full mt-44 bg-white shadow-lg transform duration-200 ease-in-out">
                         <div class="flex justify-center px-5 -mt-20">
                             <div>
+                                <%
+                                    Member member = (Member)session.getAttribute("member");
+                                    String profile = "";
+                                    if(member.getSrc().isEmpty()){
+                                        String first_name = member.getName().substring(0,1).toUpperCase();
+                                        profile = "https://ui-avatars.com/api/?name=" + first_name + "&color=7F9CF5&background=EBF4FF";
+                                    } else {
+                                        profile = member.getSrc();
+                                    }
+                                %>
                                 <img class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
-                                     src="<c:url value="/images/profile-sample.jpg"/>" alt="profile" />
+                                     src="<%=profile%>" alt="profile" />
                             </div>
                         </div>
 
                         <div class="w-full px-4 text-center my-10">
                             <div class="text-center px-14">
-                                <h2 class="text-gray-800 mt-3 text-3xl font-bold">Guest</h2>
-                                <p class="text-gray-400 mt-3">guest@gmail.com</p>
+                                <h2 class="text-gray-800 mt-3 text-3xl font-bold"><%=member.getName()%></h2>
+                                <p class="text-gray-400 mt-3"><%=member.getEmail()%></p>
                                 <p class="text-gray-600 mt-3 mb-16">
-                                    아무리 가까운 길이라도 가지 않으면 도달하지 못하고 아무리 쉬운
-                                    일이라도 하지 않으면 이루지 못한다.
+                                    <c:choose>
+                                        <c:when test="${member.info == null}">
+                                            아무리 가까운 길이라도 가지 않으면 도달하지 못하고 아무리 쉬운
+                                            일이라도 하지 않으면 이루지 못한다.
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${member.info}
+                                        </c:otherwise>
+                                    </c:choose>
                                 </p>
                             </div>
                             <div class="p-3 text-center">
@@ -89,6 +106,7 @@
                     </div>
                     <div aria-label="group of cards" tabindex="0" class="focus:outline-none px-4 pt-7 w-full">
                         <div class="w-full">
+
                             <div aria-label="card 1" tabindex="0"
                                  class="cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded">
                                 <div class="flex items-center pb-4">
@@ -122,6 +140,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div aria-label="card 2" tabindex="0"
                                  class="cursor-pointer focus:outline-none active:opacity-90 mb-6 bg-white p-6 shadow rounded">
                                 <div class="flex items-center pb-4">
@@ -151,6 +170,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div aria-label="card 3" tabindex="0"
                                  class="cursor-pointer focus:outline-none active:opacity-90 mb-6 bg-white p-6 shadow rounded">
                                 <div class="flex items-center pb-4">

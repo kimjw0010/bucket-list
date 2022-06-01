@@ -3,29 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.induk.bucketlist.repository.BucketItemRepository">
-    <resultMap id="itemResult" type="Bucket_item">
+    <resultMap id="itemResult" type="BucketItem">
         <id property="idx" column="idx" />
-        <result property="bucket_list_idx" column="bucket_list_idx" />
+        <result property="category_idx" column="category_idx" />
         <result property="member_idx" column="member_idx" />
         <result property="title" column="title" />
-        <result property="content" column="content" />
-        <result property="completion_date" column="completion_date" />
-        <association property="member" column="member_idx" javaType="Member">
-            <result property="email" column="member_email" />
-        </association>
-        <association property="bucket_list" column="bucket_list_idx" javaType="Bucket_list">
-            <result property="category_idx" column="bucket_list_category_idx" />
-            <result property="title" column="bucket_list_title" />
-            <result property="start_date" column="bucket_list_start_date" />
-            <result property="completion_date" column="bucket_list_completion_date" />
-        </association>
-        <association property="category" column="bucket_list_category_idx" javaType="Category">
+        <result property="status" column="status" />
+        <result property="created_at" column="created_at" />
+        <association property="category" column="category_idx" javaType="Category">
             <result property="name" column="category_name" />
             <result property="scr" column="category_scr" />
         </association>
     </resultMap>
 
-    <select id="findAll" resultType="Bucket_item" resultMap="itemResult">
+    <select id="findAll" resultType="BucketItem" resultMap="itemResult">
         select bi.*,
                m.email as member_email,
                bl.cateogry_idx as bucket_list_category_idx,
@@ -41,16 +32,26 @@
         order by bi.idx
     </select>
 
-    <select id="findByTitle" parameterType="Long" resultType="Bucket_item" resultMap="itemResult">
+    <select id="findByIdx" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
+        select bi.*,
+               c.name,
+               c.src
+        from bucket_item bi
+        left join category c on bi.category_idx = c.idx
+        where bi.member_idx = #{idx}
+        order by bi.idx
+    </select>
+
+    <select id="findByTitle" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
         select * from bucket_item where title like concat('%', #{title}, '%')
     </select>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="idx" parameterType="Bucket_item">
+    <insert id="save" useGeneratedKeys="true" keyProperty="idx" parameterType="BucketItem">
         insert into bucket_item(bucket_list_idx, member_idx, title, content, completion_date)
         values (#{bucket_list_idx}, #{member_idx}, #{title}, #{content}, #{completion_date})
     </insert>
 
-    <update id="update" parameterType="Bucket_item">
+    <update id="update" parameterType="BucketItem">
         update bucket_item
         set bucket_list_idx=#{bucket_list_idx}, member_idx=#{member_idx}, title=#{title}, content=#{content}, completion_date=#{completion_date}
         where idx=#{idx}

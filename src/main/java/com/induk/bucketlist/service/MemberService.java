@@ -26,14 +26,7 @@ public class MemberService {
     }
 
     public Long saveMember(Member member) throws IOException {
-        UploadFile uploadFile = fileStore.storeFile(member.getImageForm(), "member");
-
-        if(uploadFile == null) {
-            member.setImage("user_image.png");
-        }else{
-            member.setImage(uploadFile.getStoreFilename());
-        }
-
+        member.setSrc("");
         memberRepository.save(member);
         return member.getIdx();
     }
@@ -44,12 +37,12 @@ public class MemberService {
 
             if(uploadFile == null) {
                 Member m = findMember(member.getIdx());
-                member.setImage(m.getImage());
+                member.setSrc(m.getSrc());
             }else{
-                member.setImage(uploadFile.getStoreFilename());
+                member.setSrc(uploadFile.getStoreFilename());
             }
         }
-        else member.setImage("user_image.png");
+        else member.setSrc("user_image.png");
         return memberRepository.update(member);
     }
 

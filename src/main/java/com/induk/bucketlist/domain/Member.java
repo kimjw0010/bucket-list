@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
@@ -26,13 +26,10 @@ public class Member {
     @Length(max=6)
     private String name;
 
-    private int allAgree;
-
-    private int newsAgree;
-
-    private int conditionAgree;
-
-
-    private String image;
+    @Length(max=255)
+    private String src;
     private MultipartFile imageForm;
+
+    @Length(max=255)
+    private String info;
 }

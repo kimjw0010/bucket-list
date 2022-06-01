@@ -75,7 +75,7 @@ public class MemberController {
         if(!historyUrl.getHistoryUrl().isEmpty() && historyUrl.getHistoryUrl() != ""){
             return "redirect:" + historyUrl.getURL();
         }
-        return "redirect:/bucketlist/dashboard";
+        return "redirect:/bucketlist";
     }
 
     @GetMapping("/signup")
@@ -132,7 +132,7 @@ public class MemberController {
         Member m = memberService.findMember(sessionMember.getIdx());
 
         member.setEmail(m.getEmail());
-        member.setImage(m.getImage());
+        member.setSrc(m.getSrc());
         member.setIdx(m.getIdx());
         //형식 검사
         if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")) {
