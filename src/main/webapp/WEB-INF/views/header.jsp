@@ -19,6 +19,7 @@
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>MyBucekt</title>
 </head>
 <script>
@@ -31,7 +32,7 @@
     <nav class="relative h-full px-6 xl:px-52 flex justify-between items-center bg-white drop-shadow-sm">
         <c:if test="${sessionScope.member == null}">
         <a href="/bucketlist">
-            <img src="<c:url value="/images/logo-s.png"/>" alt="logo" class="w-40 h-auto m-1"/>
+            <img src="/images/logo-s.png" alt="logo" class="w-40 h-auto m-1"/>
         </a>
         </c:if>
         <c:if test="${sessionScope.member != null}">

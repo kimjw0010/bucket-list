@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,28 +14,29 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bucket_item {
+public class BucketItem {
 
     private Long idx;
 
-    @NotNull(message = "bucket_list는 필수 선택입니다.")
-    private Long bucket_list_idx;
+    @NotNull(message = "category는 필수 선택입니다.")
+    private Long category_idx;
 
     @NotNull(message = "작성자는 필수 선택입니다.")
     private Long member_idx;
 
     @NotBlank(message = "제목은 필수 입력입니다.")
-    @Length(max=64)
+    @Length(max=128)
     private String title;
 
-    @NotBlank(message = "내용은 필수 입력입니다.")
-    @Length(max=256)
-    private String content;
+    @NotBlank(message = "성공여부는 필수 입력입니다.")
+    private boolean status;
 
-    @NotBlank(message = "완료예정일은 필수 입력입니다.")
-    private String completion_date;
+    @NotBlank(message = "작성일은 필수 입력입니다.")
+    private String created_at;
 
-    private Bucket_list bucket_list;
-    private Member member;
+    @Length(max=255)
+    private String src;
+    private MultipartFile imageForm;
+
     private Category category;
 }

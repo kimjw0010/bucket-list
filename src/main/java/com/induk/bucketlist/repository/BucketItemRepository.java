@@ -1,7 +1,6 @@
 package com.induk.bucketlist.repository;
 
-import com.induk.bucketlist.domain.Member;
-import com.induk.bucketlist.domain.Bucket_item;
+import com.induk.bucketlist.domain.BucketItem;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,9 +8,10 @@ import java.util.List;
 @Mapper
 public interface BucketItemRepository {
 
-    List<Bucket_item> findAll();
-    Bucket_item findByTitle(String title);
-    Long save(Bucket_item bucketItem);
-    int update(Bucket_item bucketItem);
+    List<BucketItem> findAll();
+    List<BucketItem> findByIdx(Long idx);
+    BucketItem findByTitle(String title);
+    Long save(BucketItem bucketItem);
+    int update(BucketItem bucketItem);
     void delete(Long idx);
 }

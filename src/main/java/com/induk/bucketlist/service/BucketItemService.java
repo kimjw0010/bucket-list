@@ -1,10 +1,13 @@
 package com.induk.bucketlist.service;
 
 import com.induk.bucketlist.domain.BucketItem;
+import com.induk.bucketlist.dto.UploadFile;
 import com.induk.bucketlist.repository.BucketItemRepository;
+import com.induk.bucketlist.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -12,6 +15,7 @@ import java.util.List;
 public class BucketItemService {
 
     private final BucketItemRepository bucketItemRepository;
+    private final FileStore fileStore;
 
     public List<BucketItem> bucketItemList() {
         return bucketItemRepository.findAll();
@@ -25,7 +29,15 @@ public class BucketItemService {
         return bucketItemRepository.findByTitle(title);
     }
 
-    public Long saveBucketItem(BucketItem bucketItem) {
+    public Long saveBucketItem(BucketItem bucketItem) throws IOException {
+        UploadFile uploadFile = fileStore.storeFile(bucketItem.getImageForm(), "bucketItem");
+
+        if(uploadFile == null) {
+            bucketItem.setSrc("");
+        }else{
+            bucketItem.setSrc(uploadFile.getStoreFilename());
+        }
+
         bucketItemRepository.save(bucketItem);
         return bucketItem.getIdx();
     }

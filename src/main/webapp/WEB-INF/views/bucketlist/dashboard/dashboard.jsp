@@ -44,21 +44,21 @@
                                 </p>
                             </div>
                             <div class="p-3 text-center">
-                  <span class="mb-3 text-4xl font-bold block tracking-wide text-gray-600">
-                    3
+                  <span class="mb-3 text-4xl font-bold block tracking-wide text-gray-600" id="total_bucketlist">
+                    ${bucketItems.size()}
                   </span>
                                 <span class="mb-3 text-lg block text-gray-400">Totals your Bucket List</span>
                             </div>
                             <div class="flex justify-center py-4 lg:pt-4 pt-8">
                                 <div class="mr-2 p-3 text-center">
-                    <span class="text-xl font-bold block tracking-wide text-gray-600">
-                      2
+                    <span class="text-xl font-bold block tracking-wide text-gray-600" id="active_bucketlist">
+                      ${active_bucketlist}
                     </span>
                                     <span class="text-sm text-red-400">Activated</span>
                                 </div>
                                 <div class="p-3 text-center">
-                    <span class="text-xl font-bold block tracking-wide text-gray-600">
-                      1
+                    <span class="text-xl font-bold block tracking-wide text-gray-600" id="complete_bucketlist">
+                      ${complete_bucketlist}
                     </span>
                                     <span class="text-sm text-green-500">Completed</span>
                                 </div>
@@ -105,30 +105,48 @@
                         <%@include file="../modal/addModal.jsp" %>
                     </div>
                     <div aria-label="group of cards" tabindex="0" class="focus:outline-none px-4 pt-7 w-full">
-                        <div class="w-full">
-
+                        <div class="w-full" id="bucketList" x-data="{ editModalOpen: false }">
+                            <c:forEach var="bucketItem" items="${bucketItems}">
                             <div aria-label="card 1" tabindex="0"
                                  class="cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded">
                                 <div class="flex items-center pb-4">
                                     <img
-                                            src="https://images.unsplash.com/photo-1604175287072-b5e71423060c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687"
+                                            src="/images/bucketItem/${bucketItem.src}"
                                             alt="bucketImg" class="w-16 h-16 rounded-full" />
                                     <div class="flex items-start justify-between w-full">
                                         <div class="pl-4 w-full">
                                             <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
-                                                에펠탑 앞에서 사진 찍기</p>
+                                                ${bucketItem.title}</p>
                                             <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
-                                                2022.05.23</p>
+                                                ${bucketItem.created_at.substring(0,10)}</p>
                                             <div tabindex="0" class="focus:outline-none flex flex-wrap justify-between pt-2">
-                                                <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">✈️ 여행
-                                                </div>
+                                                <c:if test="${bucketItem.category_idx == 1}">
+                                                    <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">✈️ 여행
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${bucketItem.category_idx == 2}">
+                                                    <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">⛷️ 도전
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${bucketItem.category_idx == 3}">
+                                                    <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">💐 경험
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${bucketItem.category_idx == 4}">
+                                                    <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">⚒️ 기술
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${bucketItem.category_idx == 5}">
+                                                    <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">🎓 교육
+                                                    </div>
+                                                </c:if>
+
                                                 <div class="flex flex-wrap justify-between mt-2 sm:mt-0">
-                                                    <div x-data="{ editModalOpen: false }">
+                                                    <div>
                                                         <div @click="editModalOpen =!editModalOpen"
                                                              class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
                                                             수정
                                                         </div>
-                                                        <%@include file="../modal/editModal.jsp" %>
                                                     </div>
                                                     <div class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
                                                         완료
@@ -140,67 +158,8 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div aria-label="card 2" tabindex="0"
-                                 class="cursor-pointer focus:outline-none active:opacity-90 mb-6 bg-white p-6 shadow rounded">
-                                <div class="flex items-center pb-4">
-                                    <img
-                                            src="https://images.unsplash.com/photo-1615791287388-6f1bd87ace4e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176"
-                                            alt="bucketImg" class="w-16 h-16 rounded-full" />
-                                    <div class="flex items-start justify-between w-full">
-                                        <div class="pl-4 w-full">
-                                            <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
-                                                한 달에 책 한 권 읽기</p>
-                                            <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
-                                                2022.01.28</p>
-                                            <div tabindex="0" class="focus:outline-none flex flex-wrap justify-between pt-2">
-                                                <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">⛷️ 도전
-                                                </div>
-                                                <div class="flex flex-wrap justify-between mt-2 sm:mt-0">
-                                                    <div class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
-                                                        수정
-                                                    </div>
-                                                    <div class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
-                                                        완료
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div aria-label="card 3" tabindex="0"
-                                 class="cursor-pointer focus:outline-none active:opacity-90 mb-6 bg-white p-6 shadow rounded">
-                                <div class="flex items-center pb-4">
-                                    <img
-                                            src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332"
-                                            alt="bucketImg" class="w-16 h-16 rounded-full" />
-                                    <div class="flex items-start justify-between w-full">
-                                        <div class="pl-4 w-full">
-                                            <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
-                                                파이썬 배우기</p>
-                                            <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
-                                                2022.02.11</p>
-                                            <div tabindex="0" class="focus:outline-none flex flex-wrap justify-between pt-2">
-                                                <div class="py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">🎓 교육
-                                                </div>
-                                                <div class="flex flex-wrap justify-between mt-2 sm:mt-0">
-                                                    <div class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
-                                                        수정
-                                                    </div>
-                                                    <div class="py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100">
-                                                        완료
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
+                            </c:forEach>
+                            <%@include file="../modal/editModal.jsp" %>
                         </div>
                     </div>
                 </div>

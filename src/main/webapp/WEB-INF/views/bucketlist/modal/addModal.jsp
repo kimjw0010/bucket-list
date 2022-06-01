@@ -26,7 +26,7 @@
             <div class="flex items-center justify-between space-x-4">
                 <h1 class="text-2xl font-medium text-gray-800 "> 🪣 버킷리스트 추가하기</h1>
 
-                <button @click="modalOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
+                <button id="close_modal" @click="modalOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
                     <i class="fa-solid fa-xmark fa-lg"></i>
                 </button>
             </div>
@@ -35,18 +35,18 @@
                 이번 생에는 꼭 이루고 싶은 나의 버킷리스트를 작성해보세요.
             </p>
 
-            <form class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
+            <form id="bucketlistForm" name="bucketlistForm" class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
                 <div>
-                    <label for="bucket-title"
+                    <label for="bucket_title"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">제목</label>
-                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket-title"name="title"
+                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket_title"name="title"
                            class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40">
                 </div>
 
                 <div class="mt-4">
-                    <label for="bucket-category"
+                    <label for="bucket_category"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">카테고리</label>
-                    <select id="bucket-category" name="category_idx"
+                    <select id="bucket_category" name="category_idx"
                             class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40">
                         <option value="1">✈️ 여행</option>
                         <option value="2">⛷️ 도전</option>
@@ -57,15 +57,15 @@
                 </div>
 
                 <div class="mt-4">
-                    <label for="bucket-image" class="block text-md text-gray-700 capitalize dark:text-gray-200">대표
+                    <label for="bucket_image" class="block text-md text-gray-700 capitalize dark:text-gray-200">대표
                         이미지</label>
                     <input type="file"
                             class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40"
-                            id="bucket-image" name="imageForm" accept="image/gif, image/bmp, image/png, image/jpeg">
+                            id="bucket_image" name="imageForm" accept="image/gif, image/bmp, image/png, image/jpeg">
                 </div>
 
                 <div class="flex justify-end mt-6">
-                    <button type="submit"
+                    <button type="button" onclick="addBucketList()"
                             class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-mainGreen2-100 rounded-md hover:bg-mainGreen2-200 focus:outline-none focus:bg-mainGreen2-200 focus:ring focus:ring-mainGreen3 focus:ring-opacity-50">
                         추가
                     </button>
@@ -74,3 +74,102 @@
         </div>
     </div>
 </div>
+
+<script>
+    function addBucketList(){
+        var formData = new FormData();
+        formData.append('title', $('#bucket_title').val());
+        formData.append('category_idx', $('#bucket_category').val());
+
+
+        console.log(formData.get("title"));
+        console.log(formData.get("category_idx"));
+        if($('input[name="imageForm"]').get(0).files[0] != null) {
+            formData.append('imageForm', $('input[name="imageForm"]').get(0).files[0]);
+            console.log(formData.get("imageForm"));
+        }
+
+
+        $.ajax({
+            type:'POST',
+            url : "<c:url value='/bucketlist/dashboard/addAjax'/>",
+            processData:false,
+            contentType: false,
+            data: formData,
+            error: function(){
+                alert("모든 입력값을 넣어주세요.");
+            },
+            success : function(bucketItems){
+                console.log(bucketItems.length);
+                var total_bucketlist = bucketItems.length;
+                $("#total_bucketlist").html(total_bucketlist);
+                var active_bucketlist = 0;
+                var complete_bucketlist = 0;
+
+                for (var a = 0; a < bucketItems.length; a++) {
+                    if(bucketItems[a].status) {
+                        complete_bucketlist++;
+                    } else {
+                        active_bucketlist++;
+                    }
+                }
+
+                $("#active_bucketlist").html(active_bucketlist);
+                $("#complete_bucketlist").html(complete_bucketlist);
+
+                $("#bucketList").children().remove();
+                var bucketList = "";
+                for (var a = 0; a < bucketItems.length; a++) {
+                    var category = "";
+                    if(bucketItems[a].category_idx == 1)
+                        category = "✈️ 여행";
+                    else if(bucketItems[a].category_idx == 2)
+                        category = "⛷️ 도전";
+                    else if(bucketItems[a].category_idx == 3)
+                        category = "💐 경험";
+                    else if(bucketItems[a].category_idx == 4)
+                        category = "⚒️ 기술";
+                    else if(bucketItems[a].category_idx == 5)
+                        category = "🎓 교육";
+
+                    bucketList += "<div aria-label=\"card 1\" tabindex=\"0\"" +
+                        "class=\"cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded\">" +
+                        "<div class=\"flex items-center pb-4\">" +
+                        "    <img" +
+                        "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
+                        "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
+                        "    <div class=\"flex items-start justify-between w-full\">" +
+                        "        <div class=\"pl-4 w-full\">" +
+                        "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                        "                " + bucketItems[a].title + "</p>" +
+                        "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
+                        "                " + bucketItems[a].created_at.substring(0,10) + "</p>" +
+                        "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
+                        "                <div class=\"py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" + category + "" +
+                        "                </div>" +
+                        "                <div class=\"flex flex-wrap justify-between mt-2 sm:mt-0\">" +
+                        "                    <div>" +
+                        "                        <div @click=\"editModalOpen =!editModalOpen\"" +
+                        "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
+                        "                            수정" +
+                        "                        </div>" +
+                        "                    </div>" +
+                        "                    <div class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
+                        "                        완료" +
+                        "                    </div>" +
+                        "                </div>" +
+                        "            </div>" +
+                        "        </div>" +
+                        "        <button aria-label=\"remove\"><i class=\"fa-solid fa-minus\"></i></button>" +
+                        "    </div>" +
+                        "</div>" +
+                        "</div>";
+                }
+
+                $("#bucketList").html(bucketList);
+                document.getElementById("close_modal").click();
+            }
+        });
+
+    }
+</script>

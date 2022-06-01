@@ -10,32 +10,26 @@
         <result property="title" column="title" />
         <result property="status" column="status" />
         <result property="created_at" column="created_at" />
+        <result property="src" column="src" />
         <association property="category" column="category_idx" javaType="Category">
             <result property="name" column="category_name" />
-            <result property="scr" column="category_scr" />
+            <result property="src" column="category_src" />
         </association>
     </resultMap>
 
     <select id="findAll" resultType="BucketItem" resultMap="itemResult">
         select bi.*,
-               m.email as member_email,
-               bl.cateogry_idx as bucket_list_category_idx,
-               bl.title as bucket_list_title,
-               bl.start_date as bucket_list_start_date,
-               bl.completion_date as bucket_list_completion_date,
                c.name as category_name,
-               c.scr as category_scr
+               c.src as category_name
         from bucket_item bi
-        left join bucket_list bl on bl.idx = bi.bucket_list_idx
-        left join member m on m.idx = bi.member_idx
-        left join category c on bl.category_idx = c.idx
+        left join category c on bi.category_idx = c.idx
         order by bi.idx
     </select>
 
     <select id="findByIdx" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
         select bi.*,
-               c.name,
-               c.src
+               c.name as category_name,
+               c.src as category_src
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
         where bi.member_idx = #{idx}
@@ -47,13 +41,13 @@
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="idx" parameterType="BucketItem">
-        insert into bucket_item(bucket_list_idx, member_idx, title, content, completion_date)
-        values (#{bucket_list_idx}, #{member_idx}, #{title}, #{content}, #{completion_date})
+        insert into bucket_item(member_idx, category_idx, title, status, src, created_at)
+        values (#{member_idx}, #{category_idx}, #{title}, #{status}, #{src}, #{created_at})
     </insert>
 
     <update id="update" parameterType="BucketItem">
         update bucket_item
-        set bucket_list_idx=#{bucket_list_idx}, member_idx=#{member_idx}, title=#{title}, content=#{content}, completion_date=#{completion_date}
+        set member_idx=#{member_idx}, category_idx=#{category_idx}, title=#{title}, status=#{status}, src=#{src}, created_at=#{created_at}
         where idx=#{idx}
     </update>
 

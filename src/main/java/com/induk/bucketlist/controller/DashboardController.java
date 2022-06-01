@@ -10,7 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,22 +29,40 @@ public class DashboardController {
         System.out.println("test dashboard");
 
         Member m = (Member)session.getAttribute("member");
+        List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(m.getIdx());
+
+        int active_bucketlist = 0;
+        int complete_bucketlist = 0;
+        for(int i=0; i<bucketItems.size(); i++){
+            if(bucketItems.get(i).isStatus())
+                complete_bucketlist++;
+            else
+                active_bucketlist++;
+        }
 
         model.addAttribute("member", memberService.findMember(m.getIdx()));
-        model.addAttribute("dashboard", bucketItemService.bucketItemListByIdx(m.getIdx()));
+        model.addAttribute("bucketItems", bucketItems);
+        model.addAttribute("active_bucketlist", active_bucketlist);
+        model.addAttribute("complete_bucketlist", complete_bucketlist);
+
         return "bucketlist/dashboard/dashboard";
     }
 
-    @PostMapping("/addAjax")
+    @RequestMapping(value="/addAjax", method=RequestMethod.POST)
     @ResponseBody
-    public Long addAjax(@RequestParam("title") String title,
-                        @RequestParam("category_idx") Long category_idx,
-                        @RequestPart("imageForm") MultipartFile imageForm){
+    public List<BucketItem> addAjax(BucketItem bucketItem, HttpSession session) throws Exception{
 
-        System.out.println("title = " + title);
-        System.out.println("category_idx = " + category_idx);
-        System.out.println("imageForm = " + imageForm.getOriginalFilename());
-        //return bucketItemService.saveBucketItem(bucketItem);
-        return 0L;
+        Date date_now = new Date(System.currentTimeMillis()); // 현재시간을 가져와 Date형으로 저장한다
+        SimpleDateFormat fourteen_format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Member member = (Member)session.getAttribute("member");
+        bucketItem.setMember_idx(member.getIdx());
+        bucketItem.setStatus(false);
+        bucketItem.setCreated_at(fourteen_format.format(date_now));
+
+        Long bucket_idx = bucketItemService.saveBucketItem(bucketItem);
+        List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
+
+        return bucketItems;
     }
 }
