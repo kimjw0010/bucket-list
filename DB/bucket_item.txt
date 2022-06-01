@@ -1,13 +1,8 @@
-CREATE TABLE `bucket_item` (
-  `idx` int NOT NULL AUTO_INCREMENT,
-  `bucket_list_idx` int DEFAULT NULL,
-  `title` varchar(64) DEFAULT NULL,
-  `content` varchar(256) DEFAULT NULL,
-  `completion_date` datetime DEFAULT NULL,
-  `member_idx` int DEFAULT NULL,
-  PRIMARY KEY (`idx`),
-  KEY `bucket_list_idx` (`bucket_list_idx`),
-  KEY `member_idx` (`member_idx`),
-  CONSTRAINT `bucket_item_ibfk_1` FOREIGN KEY (`bucket_list_idx`) REFERENCES `bucket_list` (`idx`),
-  CONSTRAINT `bucket_item_ibfk_2` FOREIGN KEY (`member_idx`) REFERENCES `member` (`idx`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create table bucket_item (
+     idx int not null primary key AUTO_INCREMENT,
+     member_idx int not null,
+     title varchar(128) not null,
+     status boolean not null,
+     src varchar(255),
+     created_at datetime,
+     category_idx int not null );
