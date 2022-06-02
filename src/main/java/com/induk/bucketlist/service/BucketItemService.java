@@ -62,7 +62,6 @@ public class BucketItemService {
         bucketItemRepository.complete(bucketItem);
     }
 
-
     public void deleteBucketItem(Long idx) {
         bucketItemRepository.delete(idx);
     }

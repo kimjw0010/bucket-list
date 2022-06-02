@@ -23,7 +23,7 @@
                c.src as category_name
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
-        order by bi.idx
+        order by bi.idx desc
     </select>
 
     <select id="findByIdx" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
@@ -33,7 +33,7 @@
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
         where bi.member_idx = #{idx}
-        order by bi.idx
+        order by bi.idx desc
     </select>
 
     <select id="findByCategoryIdx" parameterType="BucketItem" resultType="BucketItem" resultMap="itemResult">
@@ -43,7 +43,7 @@
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
         where bi.member_idx = #{member_idx} and bi.category_idx = #{category_idx}
-        order by bi.idx
+        order by bi.idx desc
     </select>
 
     <select id="findByTitle" parameterType="Long" resultType="BucketItem" resultMap="itemResult">

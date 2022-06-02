@@ -160,7 +160,7 @@
                         "                </div>" +
                         "            </div>" +
                         "        </div>" +
-                        "        <button aria-label=\"remove\"><i class=\"fa-solid fa-minus\"></i></button>" +
+                        "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
                         "    </div>" +
                         "</div>" +
                         "</div>";

@@ -168,13 +168,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <c:if test="${bucketItem.status}">
-                                            <button aria-label="remove" class="hidden"><i class="fa-solid fa-minus"></i></button>
-                                        </c:if>
-                                        <c:if test="!${bucketItem.status}">
-
-                                            <button aria-label="remove"><i class="fa-solid fa-minus"></i></button>
-                                        </c:if>
+                                        <button aria-label="remove" onclick="delBucket(${bucketItem.idx}, ${bucketItem.category_idx})"><i class="fa-solid fa-minus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -267,10 +261,7 @@
                             "                </div>" +
                             "            </div>" +
                             "        </div>" +
-                            "        <button aria-label=\"remove\"";
-                            if(bucketItems[a].status)
-                                bucketList += "   class=\"hidden\"   ";
-                            bucketList += "><i class=\"fa-solid fa-minus\"></i></button>" +
+                            "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
                             "    </div>" +
                             "</div>" +
                             "</div>";
@@ -361,10 +352,7 @@
                         "                </div>" +
                         "            </div>" +
                         "        </div>" +
-                        "        <button aria-label=\"remove\"";
-                    if(bucketItems[a].status)
-                        bucketList += "   class=\"hidden\"   ";
-                    bucketList += "><i class=\"fa-solid fa-minus\"></i></button>" +
+                        "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
                         "    </div>" +
                         "</div>" +
                         "</div>";
@@ -391,6 +379,101 @@
             }
         });
 
+    }
+
+    function delBucket(idx, category_idx) {
+        if (window.confirm("버킷리스트를 삭제하시겠습니까?")) {
+            var formData = new FormData();
+            formData.append('idx', idx);
+            formData.append('category_idx', category_idx);
+
+            $.ajax({
+                type: 'POST',
+                url: "<c:url value='/bucketlist/dashboard/delAjax'/>",
+                processData: false,
+                contentType: false,
+                data: formData,
+                error: function () {
+                    alert("통신 오류");
+                },
+                success: function (bucketItems) {
+
+                    $("#bucketList").children().remove();
+                    var bucketList = "";
+                    for (var a = 0; a < bucketItems.length; a++) {
+                        var category = "";
+                        if (bucketItems[a].category_idx == 1)
+                            category = "✈️ 여행";
+                        else if (bucketItems[a].category_idx == 2)
+                            category = "⛷️ 도전";
+                        else if (bucketItems[a].category_idx == 3)
+                            category = "💐 경험";
+                        else if (bucketItems[a].category_idx == 4)
+                            category = "⚒️ 기술";
+                        else if (bucketItems[a].category_idx == 5)
+                            category = "🎓 교육";
+
+                        bucketList += "<div aria-label=\"card " + a + 1 + "\" tabindex=\"0\"" +
+                            "class=\"cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded\">" +
+                            "<div class=\"flex items-center pb-4\">" +
+                            "    <img" +
+                            "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
+                            "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
+                            "    <div class=\"flex items-start justify-between w-full\">" +
+                            "        <div class=\"pl-4 w-full\">" +
+                            "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                            "                " + bucketItems[a].title + "</p>" +
+                            "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
+                            "                " + bucketItems[a].created_at.substring(0, 10) + "</p>" +
+                            "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
+                            "                <div class=\"py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" + category + "" +
+                            "                </div>" +
+                            "                <div class=\"flex flex-wrap justify-between mt-2 sm:mt-0\">" +
+                            "                    <div>" +
+                            "                        <div @click=\"editModalOpen =!editModalOpen\" onclick=\"setEdit(" + bucketItems[a].idx + ", '" + bucketItems[a].title + "', " + bucketItems[a].category_idx + ", '" + bucketItems[a].src + "')\"" +
+                            "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100 ";
+                        if (bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
+                            "                            수정" +
+                            "                        </div>" +
+                            "                    </div>" +
+                            "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
+                        if (bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
+                            "                        완료" +
+                            "                    </div>" +
+                            "                </div>" +
+                            "            </div>" +
+                            "        </div>" +
+                            "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
+                            "    </div>" +
+                            "</div>" +
+                            "</div>";
+                    }
+
+                    var active_bucketlist = 0;
+                    var complete_bucketlist = 0;
+
+                    for (var a = 0; a < bucketItems.length; a++) {
+                        if (bucketItems[a].status) {
+                            complete_bucketlist++;
+                        } else {
+                            active_bucketlist++;
+                        }
+                    }
+
+                    var total_bucketlist = bucketItems.length;
+                    $("#total_bucketlist").html(total_bucketlist);
+                    $("#active_bucketlist").html(active_bucketlist);
+                    $("#complete_bucketlist").html(complete_bucketlist);
+
+                    $("#bucketList").html(bucketList);
+                    document.getElementById("close_modalE").click();
+                }
+            });
+        }
     }
 </script>
 
