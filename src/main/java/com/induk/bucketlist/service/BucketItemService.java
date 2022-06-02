@@ -25,6 +25,10 @@ public class BucketItemService {
         return bucketItemRepository.findByIdx(idx);
     }
 
+    public List<BucketItem> bucketItemListByCategoryIdx(BucketItem bucketItem) {
+        return bucketItemRepository.findByCategoryIdx(bucketItem);
+    }
+
     public BucketItem findBucketItem(String title) {
         return bucketItemRepository.findByTitle(title);
     }
@@ -42,8 +46,20 @@ public class BucketItemService {
         return bucketItem.getIdx();
     }
 
-    public int updateBucketItem(BucketItem bucketItem) {
-        return bucketItemRepository.update(bucketItem);
+    public void updateBucketItem(BucketItem bucketItem) throws IOException {
+        UploadFile uploadFile = null;
+        System.out.println("bucketItem = " + bucketItem.getSrc());
+        if(bucketItem.getSrc() == null) {
+            uploadFile = fileStore.storeFile(bucketItem.getImageForm(), "bucketItem");
+        }
+        if(uploadFile != null) {
+            bucketItem.setSrc(uploadFile.getStoreFilename());
+        }
+        bucketItemRepository.update(bucketItem);
+    }
+
+    public void completeBucketItem(BucketItem bucketItem) {
+        bucketItemRepository.complete(bucketItem);
     }
 
     public void deleteBucketItem(Long idx) {

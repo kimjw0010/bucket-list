@@ -60,7 +60,8 @@ dependencies {
 	implementation 'junit:junit:4.12'
 
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	compileOnly 'org.springframework.boot:spring-boot-devtools'
+
 	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

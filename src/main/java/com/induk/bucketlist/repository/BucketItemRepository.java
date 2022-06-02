@@ -10,8 +10,10 @@ public interface BucketItemRepository {
 
     List<BucketItem> findAll();
     List<BucketItem> findByIdx(Long idx);
+    List<BucketItem> findByCategoryIdx(BucketItem bucketItem);
     BucketItem findByTitle(String title);
     Long save(BucketItem bucketItem);
-    int update(BucketItem bucketItem);
+    void update(BucketItem bucketItem);
+    void complete(BucketItem bucketItem);
     void delete(Long idx);
 }

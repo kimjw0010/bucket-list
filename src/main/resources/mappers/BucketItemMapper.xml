@@ -23,7 +23,7 @@
                c.src as category_name
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
-        order by bi.idx
+        order by bi.idx desc
     </select>
 
     <select id="findByIdx" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
@@ -33,7 +33,17 @@
         from bucket_item bi
         left join category c on bi.category_idx = c.idx
         where bi.member_idx = #{idx}
-        order by bi.idx
+        order by bi.idx desc
+    </select>
+
+    <select id="findByCategoryIdx" parameterType="BucketItem" resultType="BucketItem" resultMap="itemResult">
+        select bi.*,
+               c.name as category_name,
+               c.src as category_src
+        from bucket_item bi
+        left join category c on bi.category_idx = c.idx
+        where bi.member_idx = #{member_idx} and bi.category_idx = #{category_idx}
+        order by bi.idx desc
     </select>
 
     <select id="findByTitle" parameterType="Long" resultType="BucketItem" resultMap="itemResult">
@@ -47,7 +57,13 @@
 
     <update id="update" parameterType="BucketItem">
         update bucket_item
-        set member_idx=#{member_idx}, category_idx=#{category_idx}, title=#{title}, status=#{status}, src=#{src}, created_at=#{created_at}
+        set member_idx=#{member_idx}, category_idx=#{category_idx}, title=#{title}, src=#{src}, created_at=#{created_at}
+        where idx=#{idx}
+    </update>
+
+    <update id="complete" parameterType="BucketItem">
+        update bucket_item
+        set status=true
         where idx=#{idx}
     </update>
 

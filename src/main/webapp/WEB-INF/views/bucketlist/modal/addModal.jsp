@@ -26,7 +26,7 @@
             <div class="flex items-center justify-between space-x-4">
                 <h1 class="text-2xl font-medium text-gray-800 "> 🪣 버킷리스트 추가하기</h1>
 
-                <button id="close_modal" @click="modalOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
+                <button id="close_modalA" @click="modalOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
                     <i class="fa-solid fa-xmark fa-lg"></i>
                 </button>
             </div>
@@ -35,11 +35,11 @@
                 이번 생에는 꼭 이루고 싶은 나의 버킷리스트를 작성해보세요.
             </p>
 
-            <form id="bucketlistForm" name="bucketlistForm" class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
+            <form id="bucketlistAdd" name="bucketlistAdd" class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
                 <div>
                     <label for="bucket_title"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">제목</label>
-                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket_title"name="title"
+                    <input placeholder="Vanilla JS 프로젝트 개발하기" type="text" id="bucket_title" name="title"
                            class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40">
                 </div>
 
@@ -61,7 +61,7 @@
                         이미지</label>
                     <input type="file"
                             class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40"
-                            id="bucket_image" name="imageForm" accept="image/gif, image/bmp, image/png, image/jpeg">
+                            id="bucket_image" name="imageFormA" accept="image/gif, image/bmp, image/png, image/jpeg">
                 </div>
 
                 <div class="flex justify-end mt-6">
@@ -84,8 +84,8 @@
 
         console.log(formData.get("title"));
         console.log(formData.get("category_idx"));
-        if($('input[name="imageForm"]').get(0).files[0] != null) {
-            formData.append('imageForm', $('input[name="imageForm"]').get(0).files[0]);
+        if($('input[name="imageFormA"]').get(0).files[0] != null) {
+            formData.append('imageForm', $('input[name="imageFormA"]').get(0).files[0]);
             console.log(formData.get("imageForm"));
         }
 
@@ -132,7 +132,7 @@
                     else if(bucketItems[a].category_idx == 5)
                         category = "🎓 교육";
 
-                    bucketList += "<div aria-label=\"card 1\" tabindex=\"0\"" +
+                    bucketList += "<div aria-label=\"card " + a+1 + "\" tabindex=\"0\"" +
                         "class=\"cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded\">" +
                         "<div class=\"flex items-center pb-4\">" +
                         "    <img" +
@@ -149,25 +149,25 @@
                         "                </div>" +
                         "                <div class=\"flex flex-wrap justify-between mt-2 sm:mt-0\">" +
                         "                    <div>" +
-                        "                        <div @click=\"editModalOpen =!editModalOpen\"" +
+                        "                        <div @click=\"editModalOpen =!editModalOpen\" onclick=\"setEdit(" + bucketItems[a].idx + ", '" + bucketItems[a].title + "', " + bucketItems[a].category_idx + ", '" + bucketItems[a].src + "')\"" +
                         "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
                         "                            수정" +
                         "                        </div>" +
                         "                    </div>" +
-                        "                    <div class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
+                        "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
                         "                        완료" +
                         "                    </div>" +
                         "                </div>" +
                         "            </div>" +
                         "        </div>" +
-                        "        <button aria-label=\"remove\"><i class=\"fa-solid fa-minus\"></i></button>" +
+                        "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
                         "    </div>" +
                         "</div>" +
                         "</div>";
                 }
 
                 $("#bucketList").html(bucketList);
-                document.getElementById("close_modal").click();
+                document.getElementById("close_modalA").click();
             }
         });
 
