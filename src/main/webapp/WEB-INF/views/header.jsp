@@ -92,10 +92,9 @@
                                     <div class="text-gray-500 text-sm"><%=member.getEmail()%></div>
                                 </div>
                                 <div class="mt-6">
-                                    <button
-                                            class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
+                                    <a href="/bucketlist/members/edit" class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
                                         설정
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="border-b border-gray-200 text-sm text-center">

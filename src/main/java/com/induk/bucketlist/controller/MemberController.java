@@ -120,7 +120,8 @@ public class MemberController {
     public String updateForm(HttpSession session, Model model){
         Member m = (Member)session.getAttribute("member");
         model.addAttribute("member", memberService.findMember(m.getIdx()));
-        return "/bucketlist/members/editForm";
+
+        return "/bucketlist/member/memberEdit";
     }
 
     @PostMapping("/edit")
@@ -157,6 +158,13 @@ public class MemberController {
             out.flush();
         }
         return "redirect:/bucketlist/members/edit";
+    }
+
+    @DeleteMapping("/delete")
+    public String deleteUser(HttpSession session){
+        Member member = (Member)session.getAttribute("member");
+        memberService.deleteMember(member.getIdx());
+        return "redirect:/bucketlist";
     }
 
     @ResponseBody
