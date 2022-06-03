@@ -31,18 +31,12 @@ public class MemberService {
         return member.getIdx();
     }
 
-    public int updateMember(Member member, String imageDel) throws IOException {
-        if(imageDel == null){
-            UploadFile uploadFile = fileStore.storeFile(member.getImageForm(), "member");
+    public int updateMember(Member member) throws IOException {
+        UploadFile uploadFile = fileStore.storeFile(member.getImageForm(), "member");
 
-            if(uploadFile == null) {
-                Member m = findMember(member.getIdx());
-                member.setSrc(m.getSrc());
-            }else{
-                member.setSrc(uploadFile.getStoreFilename());
-            }
-        }
-        else member.setSrc("user_image.png");
+        if(uploadFile != null)
+            member.setSrc(uploadFile.getStoreFilename());
+
         return memberRepository.update(member);
     }
 

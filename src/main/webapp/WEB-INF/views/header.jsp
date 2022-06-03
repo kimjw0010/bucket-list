@@ -93,11 +93,22 @@
 
                     <!-- user menu -->
                     <div class="mx-4 h-12 w-12 inline-block relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
-                        <div
-                                class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
-                                style="
-                background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');
-              " b :class="{ 'border-indigo-100' : showMenu }" @click="showMenu = !showMenu"></div>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.member.src}">
+                                <div class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
+                                     style="background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');"
+                                     b :class="{ 'border-indigo-100' : showMenu }" @click="showMenu = !showMenu">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="<%="/images/member/"%>${sessionScope.member.src}" alt="profile"
+                                     class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
+                                     style="
+                                             background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');
+                                             " b :class="{ 'border-indigo-100' : showMenu }" @click="showMenu = !showMenu">
+                            </c:otherwise>
+                        </c:choose>
+
 
                         <div x-show="showMenu"
                              class="bg-white border border-gray-200 absolute right-0 top-14 w-80 shadow-lg rounded-xl"
@@ -108,20 +119,25 @@
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-90 translate-y-1">
                             <div class="p-6 flex items-center justify-center border-b border-gray-200 w-full flex-col">
-                                <div
-                                        class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center"
-                                        style="
-                    background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');
-                  "></div>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.member.src}">
+                                        <div class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center"
+                                             style="background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');">
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="<%="/images/member/"%>${sessionScope.member.src}" alt="profile"
+                                             class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center">
+                                    </c:otherwise>
+                                </c:choose>
                                 <div class="mt-6 text-center">
                                     <div class="font-bold"><%=member.getName()%></div>
                                     <div class="text-gray-500 text-sm"><%=member.getEmail()%></div>
                                 </div>
                                 <div class="mt-6">
-                                    <button
-                                            class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
+                                    <a href="/bucketlist/members/edit" class="px-4 py-2 text-sm bg-white rounded-xl border transition-colors duration-150 ease-linear border-gray-200 text-gray-500 focus:outline-none focus:ring-0 font-bold hover:bg-gray-50 focus:bg-indigo-50 focus:text-indigo">
                                         설정
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="border-b border-gray-200 text-sm text-center">
