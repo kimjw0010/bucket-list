@@ -48,6 +48,7 @@
         </form>
     </div>
 </main>
+<script type="module" src="<c:url value="/js/searchCategory.js"/>"></script>
 </body>
 </html>
 
