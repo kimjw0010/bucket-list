@@ -7,10 +7,11 @@ import com.induk.bucketlist.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,12 +34,9 @@ public class DashboardController {
 
         int active_bucketlist = 0;
         int complete_bucketlist = 0;
-        for(int i=0; i<bucketItems.size(); i++){
-            if(bucketItems.get(i).isStatus())
-                complete_bucketlist++;
-            else
-                active_bucketlist++;
-        }
+        for(int i=0; i<bucketItems.size(); i++)
+            if (bucketItems.get(i).isStatus()) complete_bucketlist++;
+            else active_bucketlist++;
 
         model.addAttribute("member", memberService.findMember(m.getIdx()));
         model.addAttribute("bucketItems", bucketItems);
@@ -59,7 +57,7 @@ public class DashboardController {
         bucketItem.setMember_idx(member.getIdx());
         bucketItem.setStatus(false);
         bucketItem.setCreated_at(fourteen_format.format(date_now));
-        
+
         Long bucket_idx = bucketItemService.saveBucketItem(bucketItem);
         List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
 
@@ -77,11 +75,7 @@ public class DashboardController {
         bucketItem.setCreated_at(fourteen_format.format(date_now));
         bucketItemService.updateBucketItem(bucketItem);
 
-        List<BucketItem> bucketItems = null;
-        if(bucketItem.getCategory_idx() == 0)
-            bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
-        else
-            bucketItems = bucketItemService.bucketItemListByCategoryIdx(bucketItem);
+        List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
 
         return bucketItems;
     }
@@ -105,8 +99,7 @@ public class DashboardController {
         bucketItem.setMember_idx(member.getIdx());
 
         List<BucketItem> bucketItems = null;
-        if(bucketItem.getCategory_idx() == 0)
-            bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
+        if(bucketItem.getCategory_idx() == 0) bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
         else
             bucketItems = bucketItemService.bucketItemListByCategoryIdx(bucketItem);
 
@@ -123,15 +116,10 @@ public class DashboardController {
         bucketItemService.deleteBucketItem(bucketItem.getIdx());
         System.out.println("bucketItem.getCategory_idx() = " + bucketItem.getCategory_idx());
         System.out.println("bucketItem = " + bucketItem.getIdx());
-        List<BucketItem> bucketItems = null;
-        if(bucketItem.getCategory_idx() == 0)
-            bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
-        else
-            bucketItems = bucketItemService.bucketItemListByCategoryIdx(bucketItem);
+        List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
 
-        for(int i=0;i<bucketItems.size();i++){
+        for(int i=0;i<bucketItems.size();i++)
             System.out.println("bucketItems.get(i).getTitle() = " + bucketItems.get(i).getTitle());
-        }
         return bucketItems;
     }
 }

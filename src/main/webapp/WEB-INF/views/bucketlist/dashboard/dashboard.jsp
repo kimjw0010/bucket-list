@@ -261,23 +261,25 @@
                             "                </div>" +
                             "            </div>" +
                             "        </div>" +
-                            "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
-                            "    </div>" +
-                            "</div>" +
-                            "</div>";
+                                "        <button aria-label=\"remove\" onclick=\"delBucket(" + bucketItems[a].idx + ", " + bucketItems[a].category_idx + ")\"><i class=\"fa-solid fa-minus\"></i></button>" +
+                                "    </div>" +
+                                "</div>" +
+                                "</div>";
                     }
 
                     var active_bucketlist = 0;
                     var complete_bucketlist = 0;
 
                     for (var a = 0; a < bucketItems.length; a++) {
-                        if(bucketItems[a].status) {
+                        if (bucketItems[a].status) {
                             complete_bucketlist++;
                         } else {
                             active_bucketlist++;
                         }
                     }
 
+                    var total_bucketlist = bucketItems.length;
+                    $("#total_bucketlist").html(total_bucketlist);
                     $("#active_bucketlist").html(active_bucketlist);
                     $("#complete_bucketlist").html(complete_bucketlist);
 
@@ -357,22 +359,6 @@
                         "</div>" +
                         "</div>";
                 }
-
-                var active_bucketlist = 0;
-                var complete_bucketlist = 0;
-
-                for (var a = 0; a < bucketItems.length; a++) {
-                    if(bucketItems[a].status) {
-                        complete_bucketlist++;
-                    } else {
-                        active_bucketlist++;
-                    }
-                }
-
-                var total_bucketlist = bucketItems.length;
-                $("#total_bucketlist").html(total_bucketlist);
-                $("#active_bucketlist").html(active_bucketlist);
-                $("#complete_bucketlist").html(complete_bucketlist);
 
                 $("#bucketList").html(bucketList);
                 document.getElementById("close_modalE").click();
