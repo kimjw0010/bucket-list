@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -124,46 +125,52 @@ public class MemberController {
         return "/bucketlist/member/memberEdit";
     }
 
-    @PostMapping("/edit")
-    public String updateForm(HttpSession session, @Valid Member member,
-                             BindingResult bindingResult, HttpServletResponse response,
-                             @RequestParam(value = "imageDel", required = false) String imageDel) throws IOException {
-
+    @PutMapping("/edit")
+    public String updateForm(HttpSession session, HttpServletResponse response,
+                             Member member,
+                             @RequestParam(value="password2", required = true) String password2,
+                             BindingResult bindingResult
+    ) throws IOException {
         Member sessionMember = (Member)session.getAttribute("member");
         Member m = memberService.findMember(sessionMember.getIdx());
 
         member.setEmail(m.getEmail());
         member.setSrc(m.getSrc());
         member.setIdx(m.getIdx());
-        //형식 검사
+//        //형식 검사
         if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")) {
-            return "/bucketlist/members/editForm";
+            return "/bucketlist/members/edit";
         }
+        System.out.println(member.toString());
         if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
-        System.out.println("\n\n\n request m:"+member.getPassword());
-        System.out.println("\n\n\n session m:"+m.getPassword());
-
-        int result = memberService.updateMember(member, imageDel);
-
-        if(result >0) {
+        System.out.println(member.toString());
+        int result = memberService.updateMember(member);
+//
+        if(result > 0) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('수정되었습니다'); location.href='/bucketlist/members/editForm';</script>");
+            out.println("<script>alert('수정되었습니다'); location.href='/bucketlist/members/edit';</script>");
             out.flush();
         }
         else{
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('수정에 실패하였습니다.'); location.href='/bucketlist/members/editForm';</script>");
+            out.println("<script>alert('수정에 실패하였습니다.'); location.href='/bucketlist/members/edit';</script>");
             out.flush();
         }
         return "redirect:/bucketlist/members/edit";
     }
 
-    @DeleteMapping("/delete")
-    public String deleteUser(HttpSession session){
+    @DeleteMapping("/edit")
+    public String deleteUser(HttpSession session, HttpServletResponse response) throws IOException {
+        System.out.println("Delete Mapping");
         Member member = (Member)session.getAttribute("member");
         memberService.deleteMember(member.getIdx());
+        session.removeAttribute("member");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('성공적으로 탈퇴하였습니다.'); location.href='/bucketlist';</script>");
+        out.flush();
         return "redirect:/bucketlist";
     }
 
