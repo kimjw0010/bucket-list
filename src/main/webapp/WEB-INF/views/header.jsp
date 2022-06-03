@@ -20,7 +20,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <title>MyBucekt</title>
+    <title>MyBucket</title>
 </head>
 <script>
     function logout()  {
@@ -40,6 +40,32 @@
                 <img src="<c:url value="/images/logo-s.png"/>" alt="logo" class="w-40 h-auto m-1"/>
             </a>
         </c:if>
+        <!-- Search Bar -->
+        <div class="flex-grow relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
+            <div class="bg-white rounded-full m-2 p-2 drop-shadow-md ">
+                <input readonly type="text" placeholder="&#xF002;  Explore Idea" @click="showMenu = !showMenu"
+                       class="font-awesome w-full pl-4 text-lg rounded-full focus:outline-none focus:ring focus:border-blue-300" />
+            </div>
+            <div x-show="showMenu"
+                 class="bg-white border border-gray-200 absolute right-0 top-16 w-full shadow-lg rounded-xl"
+                 x-transition:enter="transition ease duration-100 transform"
+                 x-transition:enter-start="opacity-0 scale-90 translate-y-1"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease duration-100 transform"
+                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 scale-90 translate-y-1">
+                <div id="search-category"
+                     class="p-5 flex flex-wrap justify-center items-center border-b border-gray-200 w-full">
+                    <div data-category-name="travel" class="category-name" tabindex="-1">여행</div>
+                    <div data-category-name="challenge" class="category-name" tabindex="-1">도전</div>
+                    <div data-category-name="exprience" class="category-name" tabindex="-1">경험</div>
+                    <div data-category-name="skill" class="category-name" tabindex="-1">기술</div>
+                    <div data-category-name="education" class="category-name" tabindex="-1">교육</div>
+                </div>
+                <div id="category-content"></div>
+            </div>
+        </div>
+        <!-- member signin / signup -->
         <div class="flex items-center">
             <c:choose>
                 <c:when test="${empty sessionScope.member}">

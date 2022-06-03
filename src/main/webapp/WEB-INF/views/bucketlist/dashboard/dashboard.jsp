@@ -181,7 +181,7 @@
         </div>
     </div>
 </main>
-
+<script type="module" src="<c:url value="/js/searchCategory.js"/>"></script>
 <script>
     function resetAdd() {
         document.getElementById("bucket_title").value = "";

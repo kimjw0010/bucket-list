@@ -63,6 +63,7 @@
         </form>
     </div>
 </main>
+<script type="module" src="<c:url value="/js/searchCategory.js"/>"></script>
 <script type="module" src="<c:url value="/js/memberAgree.js"/>"></script>
 </body>
 </html>
