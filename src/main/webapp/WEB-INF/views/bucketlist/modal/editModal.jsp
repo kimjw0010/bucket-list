@@ -158,8 +158,6 @@
                         "</div>";
                 }
 
-
-
                 $("#bucketList").html(bucketList);
                 document.getElementById("close_modalE").click();
             }
