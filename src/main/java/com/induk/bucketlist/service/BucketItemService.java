@@ -6,6 +6,7 @@ import com.induk.bucketlist.repository.BucketItemRepository;
 import com.induk.bucketlist.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,8 +35,8 @@ public class BucketItemService {
     }
 
     public Long saveBucketItem(BucketItem bucketItem) throws IOException {
-        UploadFile uploadFile = fileStore.storeFile(bucketItem.getImageForm(), "bucketItem");
-
+        MultipartFile multipartFile = bucketItem.getImageForm();
+        UploadFile uploadFile = fileStore.storeFile(multipartFile, "bucketItem");
         if(uploadFile == null) {
             bucketItem.setSrc("");
         }else{
@@ -43,6 +44,18 @@ public class BucketItemService {
         }
 
         bucketItemRepository.save(bucketItem);
+        return bucketItem.getIdx();
+    }
+
+    public Long saveBucketItem_U(BucketItem bucketItem) throws IOException {
+        MultipartFile multipartFile = bucketItem.getImageForm();
+        UploadFile uploadFile = fileStore.storeFile_U(multipartFile, "bucketItem");
+        if(uploadFile == null) {
+            bucketItem.setSrc("");
+        }else{
+            bucketItem.setSrc(uploadFile.getStoreFilename());
+        }
+
         return bucketItem.getIdx();
     }
 

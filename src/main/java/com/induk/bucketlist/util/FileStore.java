@@ -15,9 +15,14 @@ public class FileStore {
 
     private String path = System.getProperty("user.dir");
     private String fileDir = path + "\\src\\main\\resources\\static\\images\\";
-
+    private String fileDir_U = path + "\\out\\production\\resources\\static\\images\\";
+    private String storeFilename = "";
     public String getFullPath(String directory, String filename) {
         return fileDir + directory + "\\" + filename;
+    }
+
+    public String getFullPath_U(String directory, String filename) {
+        return fileDir_U + directory + "\\" + filename;
     }
 
     public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles, String directory) throws IOException {
@@ -38,8 +43,22 @@ public class FileStore {
         }
 
         String originalFilename = multipartFile.getOriginalFilename();
-        String storeFilename = createStoreFilename(originalFilename);
+        storeFilename = createStoreFilename(originalFilename);
         multipartFile.transferTo(new File(getFullPath(directory, storeFilename)));
+
+        return new UploadFile(originalFilename, storeFilename, directory);
+    }
+
+    public UploadFile storeFile_U(MultipartFile multipartFile, String directory) throws IOException {
+        if(multipartFile.isEmpty()) {
+            return null;
+        }
+        
+        String originalFilename = multipartFile.getOriginalFilename();
+        storeFilename = createStoreFilename(originalFilename);
+
+        File file = new File(getFullPath_U(directory, storeFilename));
+        multipartFile.transferTo(file);
 
         return new UploadFile(originalFilename, storeFilename, directory);
     }

@@ -26,7 +26,8 @@
             <div class="flex items-center justify-between space-x-4">
                 <h1 class="text-2xl font-medium text-gray-800 "> 🪣 버킷리스트 추가하기</h1>
 
-                <button id="close_modalA" @click="modalOpen = false" class="text-gray-600 focus:outline-none hover:text-gray-700">
+                <button id="close_modalA" @click="modalOpen = false"
+                        class="text-gray-600 focus:outline-none hover:text-gray-700">
                     <i class="fa-solid fa-xmark fa-lg"></i>
                 </button>
             </div>
@@ -35,7 +36,8 @@
                 이번 생에는 꼭 이루고 싶은 나의 버킷리스트를 작성해보세요.
             </p>
 
-            <form id="bucketlistAdd" name="bucketlistAdd" class="mt-5" method="post" action="/bucketlist/dashboard/addAjax"  enctype="multipart/form-data">
+            <form id="bucketlistAdd" name="bucketlistAdd" class="mt-5" method="post"
+                  action="/bucketlist/dashboard/addAjax" enctype="multipart/form-data">
                 <div>
                     <label for="bucket_title"
                            class="block text-md text-gray-700 capitalize dark:text-gray-200">제목</label>
@@ -60,8 +62,8 @@
                     <label for="bucket_image" class="block text-md text-gray-700 capitalize dark:text-gray-200">대표
                         이미지</label>
                     <input type="file"
-                            class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40"
-                            id="bucket_image" name="imageFormA" accept="image/gif, image/bmp, image/png, image/jpeg">
+                           class="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-mainGreen3 focus:outline-none focus:ring focus:ring-mainGreen3 focus:ring-opacity-40"
+                           id="bucket_image" name="imageFormA" accept="image/gif, image/bmp, image/png, image/jpeg">
                 </div>
 
                 <div class="flex justify-end mt-6">
@@ -76,46 +78,64 @@
 </div>
 
 <script>
-    function addBucketList(){
+    function addBucketList() {
         var formData = new FormData();
         formData.append('title', $('#bucket_title').val());
         formData.append('category_idx', $('#bucket_category').val());
 
-
         console.log(formData.get("title"));
         console.log(formData.get("category_idx"));
-        if($('input[name="imageFormA"]').get(0).files[0] != null) {
+        if ($('input[name="imageFormA"]').get(0).files[0] != null) {
             formData.append('imageForm', $('input[name="imageFormA"]').get(0).files[0]);
-            console.log(formData.get("imageForm"));
         }
 
+        if (formData.get("title") == null || formData.get("title") == "" || $('input[name="imageFormA"]').get(0).files[0] == null) {
+            alert("모든 입력값을 넣어주세요.");
+            return 0;
+        }
 
         $.ajax({
-            type:'POST',
-            url : "<c:url value='/bucketlist/dashboard/addAjax'/>",
-            processData:false,
+            type: 'POST',
+            url: "<c:url value='/bucketlist/dashboard/addAjaxU'/>",
+            processData: false,
             contentType: false,
             data: formData,
-            error: function(){
-                alert("모든 입력값을 넣어주세요.");
+            error: function () {
+
+                alert("통신 오류");
             },
-            success : function(bucketItems){
+            success: function (bucketItems) {
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: "<c:url value='/bucketlist/dashboard/addAjax'/>",
+            processData: false,
+            contentType: false,
+            data: formData,
+            error: function () {
+
+                alert("통신 오류");
+            },
+            success: function (bucketItems) {
                 $("#bucketList").children().remove();
                 var bucketList = "";
                 for (var a = 0; a < bucketItems.length; a++) {
                     var category = "";
-                    if(bucketItems[a].category_idx == 1)
+                    if (bucketItems[a].category_idx == 1)
                         category = "✈️ 여행";
-                    else if(bucketItems[a].category_idx == 2)
+                    else if (bucketItems[a].category_idx == 2)
                         category = "⛷️ 도전";
-                    else if(bucketItems[a].category_idx == 3)
+                    else if (bucketItems[a].category_idx == 3)
                         category = "💐 경험";
-                    else if(bucketItems[a].category_idx == 4)
+                    else if (bucketItems[a].category_idx == 4)
                         category = "⚒️ 기술";
-                    else if(bucketItems[a].category_idx == 5)
+                    else if (bucketItems[a].category_idx == 5)
                         category = "🎓 교육";
 
-                    bucketList += "<div aria-label=\"card " + a+1 + "\" tabindex=\"0\"" +
+
+                    bucketList += "<div aria-label=\"card " + a + 1 + "\" tabindex=\"0\"" +
                         "class=\"cursor-pointer focus:outline-none mb-6 bg-white p-6 shadow rounded\">" +
                         "<div class=\"flex items-center pb-4\">" +
                         "    <img" +
@@ -126,7 +146,7 @@
                         "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
                         "                " + bucketItems[a].title + "</p>" +
                         "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
-                        "                " + bucketItems[a].created_at.substring(0,10) + "</p>" +
+                        "                " + bucketItems[a].created_at.substring(0, 10) + "</p>" +
                         "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
                         "                <div class=\"py-2 px-4 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" + category + "" +
                         "                </div>" +
