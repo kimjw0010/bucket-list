@@ -7,7 +7,7 @@
 <main>
     <div class="flex flex-wrap justify-center max-h-screen mx-20">
         <div class="w-full lg:w-1/4">
-            <aside>
+            <aside class="sticky top-0">
                 <div class="container flex flex-wrap items-center ">
                     <div class="w-full mt-44 bg-white shadow-lg transform duration-200 ease-in-out">
                         <div class="flex justify-center px-5 -mt-20">
@@ -116,8 +116,9 @@
                                             alt="bucketImg" class="w-16 h-16 rounded-full" />
                                     <div class="flex items-start justify-between w-full">
                                         <div class="pl-4 w-full">
-                                            <p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800">
-                                                ${bucketItem.title}</p>
+                                            <c:if test="${bucketItem.status}"><p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-400 line-through"></c:if>
+                                            <c:if test="${!bucketItem.status}"><p tabindex="0" class="focus:outline-none text-xl font-medium leading-5 text-gray-800"></c:if>
+                                            ${bucketItem.title}</p>
                                             <p tabindex="0" class="focus:outline-none text-sm leading-normal pt-2 text-gray-500">작성 일자 :
                                                 ${bucketItem.created_at.substring(0,10)}</p>
                                             <div tabindex="0" class="focus:outline-none flex flex-wrap justify-between pt-2">
