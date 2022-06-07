@@ -49,7 +49,6 @@ public class DashboardController {
     @RequestMapping(value="/addAjax", method=RequestMethod.POST)
     @ResponseBody
     public List<BucketItem> addAjax(BucketItem bucketItem, HttpSession session) throws Exception{
-
         Date date_now = new Date(System.currentTimeMillis()); // 현재시간을 가져와 Date형으로 저장한다
         SimpleDateFormat fourteen_format = new SimpleDateFormat("yyyy-MM-dd");
 

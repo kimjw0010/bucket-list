@@ -94,25 +94,26 @@
             return 0;
         }
 
-        $.ajax({
-            type: 'POST',
-            url: "<c:url value='/bucketlist/dashboard/addAjaxU'/>",
-            processData: false,
-            contentType: false,
-            data: formData,
-            error: function () {
+        <%--$.ajax({--%>
+        <%--    type: 'POST',--%>
+        <%--    url: "<c:url value='/bucketlist/dashboard/addAjaxU'/>",--%>
+        <%--    processData: false,--%>
+        <%--    contentType: false,--%>
+        <%--    data: formData,--%>
+        <%--    error: function () {--%>
 
-                alert("통신 오류");
-            },
-            success: function (bucketItems) {
-            }
-        });
+        <%--        alert("통신 오류");--%>
+        <%--    },--%>
+        <%--    success: function (bucketItems) {--%>
+        <%--    }--%>
+        <%--});--%>
 
         $.ajax({
             type: 'POST',
             url: "<c:url value='/bucketlist/dashboard/addAjax'/>",
             processData: false,
             contentType: false,
+            enctype: "multipart/form-data",
             data: formData,
             error: function () {
 

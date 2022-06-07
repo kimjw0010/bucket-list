@@ -83,31 +83,34 @@
             return [pass, repass]
         }
         document.getElementById('user-signout-button').onclick = e => {
-            const [pass, repass] = getPass()
-
-            if ((pass !== repass) || (pass !== "<%=member.getPassword()%>")) {
-                alert('패스워드가 틀립니다.');
-                return;
-            }
-
-            if (confirm('정말 삭제하시겠습니까?')) {
-                document.getElementsByName("_method")[0].value = "delete";
-                $('#login-form').submit();
-            }
+            $('#login-form').submit(() => {
+                const [pass, repass] = getPass()
+                if (!pass || !repass){
+                    alert('패스워드를 입력해주세요')
+                    return false;
+                }else if ((pass !== repass) || (pass !== "<%=member.getPassword()%>")) {
+                    alert('패스워드가 틀립니다.');
+                    return false;
+                }else if(confirm('정말 삭제하시겠습니까?')) {
+                    document.getElementsByName("_method")[0].value = "delete";
+                }
+                return true;
+            });
         }
         document.getElementById('user-submit-button').onclick = e => {
-            const [pass, repass] = getPass()
+            $('#login-form').submit(() => {
+                const [pass, repass] = getPass()
 
-            if (pass && repass && pass !== repass) {
-                alert('패스워드가 틀립니다.');
-                return;
-            }
-
-            if (confirm('정말 수정하시겠습니까?')) {
-                document.getElementById("login-form").enctype = "multipart/form-data";
-                document.getElementsByName("_method")[0].value = "put";
-                $('#login-form').submit();
-            }
+                if (pass && repass && pass !== repass) {
+                    alert('패스워드가 틀립니다.');
+                    return false;
+                }
+                if (confirm('정말 수정하시겠습니까?')) {
+                    document.getElementById("login-form").enctype = "multipart/form-data";
+                    document.getElementsByName("_method")[0].value = "put";
+                }
+                return true;
+            });
         }
     }
 </script>

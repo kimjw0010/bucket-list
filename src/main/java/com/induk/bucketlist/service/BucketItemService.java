@@ -35,8 +35,7 @@ public class BucketItemService {
     }
 
     public Long saveBucketItem(BucketItem bucketItem) throws IOException {
-        MultipartFile multipartFile = bucketItem.getImageForm();
-        UploadFile uploadFile = fileStore.storeFile(multipartFile, "bucketItem");
+        UploadFile uploadFile = fileStore.storeFile(bucketItem.getImageForm(), "bucketItem");
         if(uploadFile == null) {
             bucketItem.setSrc("");
         }else{

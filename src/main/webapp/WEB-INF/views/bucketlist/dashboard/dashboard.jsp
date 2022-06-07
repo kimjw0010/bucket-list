@@ -19,7 +19,7 @@
                                         String first_name = member.getName().substring(0,1).toUpperCase();
                                         profile = "https://ui-avatars.com/api/?name=" + first_name + "&color=7F9CF5&background=EBF4FF";
                                     } else {
-                                        profile = member.getSrc();
+                                        profile = "/images/member/" + member.getSrc();
                                     }
                                 %>
                                 <img class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
