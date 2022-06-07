@@ -137,7 +137,7 @@ public class MemberController {
         member.setEmail(m.getEmail());
         member.setSrc(m.getSrc());
         member.setIdx(m.getIdx());
-//        //형식 검사
+        //형식 검사
         if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")) {
             return "/bucketlist/members/edit";
         }
@@ -145,7 +145,7 @@ public class MemberController {
         if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
         System.out.println(member.toString());
         int result = memberService.updateMember(member);
-//
+
         if(result > 0) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
