@@ -101,7 +101,7 @@
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <img src="<%="/images/member/"%>${sessionScope.member.src}" alt="profile"
+                                <img src="<%="/images/member/"%>${member.src}" alt="profile"
                                      class="h-12 w-12 cursor-pointer rounded-full border-2 border-transparent bg-indigo bg-no-repeat bg-cover bg-center bg-blue-50"
                                      style="
                                              background-image: url('https://ui-avatars.com/api/?name=<%=first_name%>&color=7F9CF5&background=EBF4FF');
@@ -126,7 +126,7 @@
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="<%="/images/member/"%>${sessionScope.member.src}" alt="profile"
+                                        <img src="<%="/images/member/"%>${member.src}" alt="profile"
                                              class="w-20 h-20 rounded-full flex items-center justify-center bg-indigo text-4xl text-white bg-no-repeat bg-cover bg-center">
                                     </c:otherwise>
                                 </c:choose>

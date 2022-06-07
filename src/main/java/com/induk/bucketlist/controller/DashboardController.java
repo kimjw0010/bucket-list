@@ -98,6 +98,22 @@ public class DashboardController {
         return bucketItems;
     }
 
+    @RequestMapping(value="/editAjaxU", method=RequestMethod.POST)
+    @ResponseBody
+    public List<BucketItem> editAjaxU(BucketItem bucketItem, HttpSession session) throws Exception{
+        System.out.println("bucketItem.getCategory_idx() = " + bucketItem.getCategory_idx());
+        Date date_now = new Date(System.currentTimeMillis()); // 현재시간을 가져와 Date형으로 저장한다
+        SimpleDateFormat fourteen_format = new SimpleDateFormat("yyyy-MM-dd");
+        Member member = (Member)session.getAttribute("member");
+        bucketItem.setMember_idx(member.getIdx());
+        bucketItem.setCreated_at(fourteen_format.format(date_now));
+        bucketItemService.updateBucketItem_U(bucketItem);
+
+        List<BucketItem> bucketItems = bucketItemService.bucketItemListByIdx(member.getIdx());
+
+        return bucketItems;
+    }
+
     @RequestMapping(value="/completeAjax", method=RequestMethod.POST)
     @ResponseBody
     public List<BucketItem> completeAjax(BucketItem bucketItem, HttpSession session) {

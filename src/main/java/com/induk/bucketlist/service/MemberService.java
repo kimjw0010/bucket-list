@@ -6,6 +6,7 @@ import com.induk.bucketlist.repository.MemberRepository;
 import com.induk.bucketlist.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,12 +33,23 @@ public class MemberService {
     }
 
     public int updateMember(Member member) throws IOException {
-        UploadFile uploadFile = fileStore.storeFile(member.getImageForm(), "member");
+        System.out.println("member.getImageForm() = " + member.getImageForm().getOriginalFilename());
+        MultipartFile multipartFile = member.getImageForm();
+        UploadFile uploadFile = fileStore.storeFile(multipartFile, "member");
 
         if(uploadFile != null)
             member.setSrc(uploadFile.getStoreFilename());
 
         return memberRepository.update(member);
+    }
+
+    public void updateMember_U(Member member) throws IOException {
+        System.out.println("member.getImageForm() = " + member.getImageForm().getOriginalFilename());
+        MultipartFile multipartFile = member.getImageForm();
+        UploadFile uploadFile = fileStore.storeFile_U(multipartFile, "member");
+
+        if(uploadFile != null)
+            member.setSrc(uploadFile.getStoreFilename());
     }
 
     public int checkDuplicateEmail(String email){

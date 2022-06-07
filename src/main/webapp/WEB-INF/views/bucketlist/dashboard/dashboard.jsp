@@ -12,25 +12,15 @@
                     <div class="w-full mt-44 bg-white shadow-lg transform duration-200 ease-in-out">
                         <div class="flex justify-center px-5 -mt-20">
                             <div>
-                                <%
-                                    Member member = (Member)session.getAttribute("member");
-                                    String profile = "";
-                                    if(member.getSrc().isEmpty()){
-                                        String first_name = member.getName().substring(0,1).toUpperCase();
-                                        profile = "https://ui-avatars.com/api/?name=" + first_name + "&color=7F9CF5&background=EBF4FF";
-                                    } else {
-                                        profile = "/images/member/" + member.getSrc();
-                                    }
-                                %>
                                 <img class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
-                                     src="<%=profile%>" alt="profile" />
+                                     src="/images/member/${member.src}" alt="profile" />
                             </div>
                         </div>
 
                         <div class="w-full px-4 text-center my-10">
                             <div class="text-center px-14">
-                                <h2 class="text-gray-800 mt-3 text-3xl font-bold"><%=member.getName()%></h2>
-                                <p class="text-gray-400 mt-3"><%=member.getEmail()%></p>
+                                <h2 class="text-gray-800 mt-3 text-3xl font-bold">${member.name}</h2>
+                                <p class="text-gray-400 mt-3">${member.email}</p>
                                 <p class="text-gray-600 mt-3 mb-16">
                                     <c:choose>
                                         <c:when test="${member.info == null}">
@@ -235,9 +225,17 @@
                             "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
                             "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
                             "    <div class=\"flex items-start justify-between w-full\">" +
-                            "        <div class=\"pl-4 w-full\">" +
-                            "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
-                            "                " + bucketItems[a].title + "</p>" +
+                            "        <div class=\"pl-4 w-full\">";
+                            if(bucketItems[a].status) {
+                                bucketList +=
+                                    "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-400 line-through\">" +
+                                    "                " + bucketItems[a].title + "</p>";
+                            } else {
+                                bucketList +=
+                                    "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                                    "                " + bucketItems[a].title + "</p>";
+                            }
+                            bucketList +=
                             "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
                             "                " + bucketItems[a].created_at.substring(0,10) + "</p>" +
                             "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
@@ -328,9 +326,17 @@
                         "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
                         "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
                         "    <div class=\"flex items-start justify-between w-full\">" +
-                        "        <div class=\"pl-4 w-full\">" +
-                        "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
-                        "                " + bucketItems[a].title + "</p>" +
+                        "        <div class=\"pl-4 w-full\">";
+                        if(bucketItems[a].status) {
+                            bucketList +=
+                                "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-400 line-through\">" +
+                                "                " + bucketItems[a].title + "</p>";
+                        } else {
+                            bucketList +=
+                                "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                                "                " + bucketItems[a].title + "</p>";
+                        }
+                        bucketList +=
                         "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
                         "                " + bucketItems[a].created_at.substring(0,10) + "</p>" +
                         "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
@@ -340,16 +346,16 @@
                         "                    <div>" +
                         "                        <div @click=\"editModalOpen =!editModalOpen\" onclick=\"setEdit(" + bucketItems[a].idx + ", '" + bucketItems[a].title + "', " + bucketItems[a].category_idx + ", '" + bucketItems[a].src + "')\"" +
                         "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100 ";
-                    if(bucketItems[a].status)
-                        bucketList += "   hidden   ";
-                    bucketList += "\">" +
-                        "                            수정" +
-                        "                        </div>" +
-                        "                    </div>" +
-                        "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
-                    if(bucketItems[a].status)
-                        bucketList += "   hidden   ";
-                    bucketList += "\">" +
+                        if(bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
+                            "                            수정" +
+                            "                        </div>" +
+                            "                    </div>" +
+                            "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
+                        if(bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
                         "                        완료" +
                         "                    </div>" +
                         "                </div>" +
@@ -407,9 +413,17 @@
                             "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
                             "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
                             "    <div class=\"flex items-start justify-between w-full\">" +
-                            "        <div class=\"pl-4 w-full\">" +
-                            "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
-                            "                " + bucketItems[a].title + "</p>" +
+                            "        <div class=\"pl-4 w-full\">";
+                            if(bucketItems[a].status) {
+                                bucketList +=
+                                    "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-400 line-through\">" +
+                                    "                " + bucketItems[a].title + "</p>";
+                            } else {
+                                bucketList +=
+                                    "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                                    "                " + bucketItems[a].title + "</p>";
+                            }
+                            bucketList +=
                             "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
                             "                " + bucketItems[a].created_at.substring(0, 10) + "</p>" +
                             "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
@@ -419,16 +433,16 @@
                             "                    <div>" +
                             "                        <div @click=\"editModalOpen =!editModalOpen\" onclick=\"setEdit(" + bucketItems[a].idx + ", '" + bucketItems[a].title + "', " + bucketItems[a].category_idx + ", '" + bucketItems[a].src + "')\"" +
                             "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100 ";
-                        if (bucketItems[a].status)
-                            bucketList += "   hidden   ";
-                        bucketList += "\">" +
-                            "                            수정" +
-                            "                        </div>" +
-                            "                    </div>" +
-                            "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
-                        if (bucketItems[a].status)
-                            bucketList += "   hidden   ";
-                        bucketList += "\">" +
+                            if (bucketItems[a].status)
+                                bucketList += "   hidden   ";
+                            bucketList += "\">" +
+                                "                            수정" +
+                                "                        </div>" +
+                                "                    </div>" +
+                                "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
+                            if (bucketItems[a].status)
+                                bucketList += "   hidden   ";
+                            bucketList += "\">" +
                             "                        완료" +
                             "                    </div>" +
                             "                </div>" +

@@ -70,6 +70,17 @@ public class BucketItemService {
         bucketItemRepository.update(bucketItem);
     }
 
+    public void updateBucketItem_U(BucketItem bucketItem) throws IOException {
+        UploadFile uploadFile = null;
+        System.out.println("bucketItem = " + bucketItem.getSrc());
+        if(bucketItem.getSrc() == null) {
+            uploadFile = fileStore.storeFile_U(bucketItem.getImageForm(), "bucketItem");
+        }
+        if(uploadFile != null) {
+            bucketItem.setSrc(uploadFile.getStoreFilename());
+        }
+    }
+
     public void completeBucketItem(BucketItem bucketItem) {
         bucketItemRepository.complete(bucketItem);
     }

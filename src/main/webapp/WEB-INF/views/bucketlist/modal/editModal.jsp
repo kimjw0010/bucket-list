@@ -99,6 +99,20 @@
         }
 
         $.ajax({
+            type: 'POST',
+            url: "<c:url value='/bucketlist/dashboard/editAjaxU'/>",
+            processData: false,
+            contentType: false,
+            data: formData,
+            error: function () {
+                alert("통신 오류");
+            },
+            success: function (bucketItems) {
+                console.log("E");
+            }
+        });
+
+        $.ajax({
             type:'POST',
             url : "<c:url value='/bucketlist/dashboard/editAjax'/>",
             processData:false,
@@ -131,9 +145,17 @@
                         "        src=\"/images/bucketItem/" + bucketItems[a].src + "\"" +
                         "        alt=\"bucketImg\" class=\"w-16 h-16 rounded-full\" />" +
                         "    <div class=\"flex items-start justify-between w-full\">" +
-                        "        <div class=\"pl-4 w-full\">" +
-                        "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
-                        "                " + bucketItems[a].title + "</p>" +
+                        "        <div class=\"pl-4 w-full\">";
+                        if(bucketItems[a].status) {
+                            bucketList +=
+                                "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-400 line-through\">" +
+                                "                " + bucketItems[a].title + "</p>";
+                        } else {
+                            bucketList +=
+                                "            <p tabindex=\"0\" class=\"focus:outline-none text-xl font-medium leading-5 text-gray-800\">" +
+                                "                " + bucketItems[a].title + "</p>";
+                        }
+                        bucketList +=
                         "            <p tabindex=\"0\" class=\"focus:outline-none text-sm leading-normal pt-2 text-gray-500\">작성 일자 :" +
                         "                " + bucketItems[a].created_at.substring(0,10) + "</p>" +
                         "            <div tabindex=\"0\" class=\"focus:outline-none flex flex-wrap justify-between pt-2\">" +
@@ -142,11 +164,17 @@
                         "                <div class=\"flex flex-wrap justify-between mt-2 sm:mt-0\">" +
                         "                    <div>" +
                         "                        <div @click=\"editModalOpen =!editModalOpen\" onclick=\"setEdit(" + bucketItems[a].idx + ", '" + bucketItems[a].title + "', " + bucketItems[a].category_idx + ", '" + bucketItems[a].src + "')\"" +
-                        "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
-                        "                            수정" +
-                        "                        </div>" +
-                        "                    </div>" +
-                        "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100\">" +
+                        "                             class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
+                        if(bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
+                            "                            수정" +
+                            "                        </div>" +
+                            "                    </div>" +
+                            "                    <div onclick=\"completed(" + bucketItems[a].idx + ")\" class=\"py-2 px-4 mx-1 text-sm leading-3 text-indigo-700 rounded-full bg-indigo-100";
+                        if(bucketItems[a].status)
+                            bucketList += "   hidden   ";
+                        bucketList += "\">" +
                         "                        완료" +
                         "                    </div>" +
                         "                </div>" +

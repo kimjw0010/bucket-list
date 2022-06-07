@@ -1,5 +1,6 @@
 package com.induk.bucketlist.controller;
 
+import com.induk.bucketlist.domain.BucketItem;
 import com.induk.bucketlist.domain.Member;
 import com.induk.bucketlist.dto.HistoryUrl;
 import com.induk.bucketlist.service.MemberService;
@@ -21,6 +22,9 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -119,17 +123,17 @@ public class MemberController {
 
     @GetMapping("/edit")
     public String updateForm(HttpSession session, Model model){
+        System.out.println("get member edit");
         Member m = (Member)session.getAttribute("member");
         model.addAttribute("member", memberService.findMember(m.getIdx()));
 
         return "/bucketlist/member/memberEdit";
     }
 
-    @PutMapping("/edit")
+    @RequestMapping(value="/edit", method=RequestMethod.POST)
     public String updateForm(HttpSession session, HttpServletResponse response,
-                             Member member,
-                             @RequestParam(value="password2", required = true) String password2,
-                             BindingResult bindingResult
+                             Member member, BindingResult bindingResult,
+                             @RequestParam(value="password2", required = true) String password2
     ) throws IOException {
         Member sessionMember = (Member)session.getAttribute("member");
         Member m = memberService.findMember(sessionMember.getIdx());
@@ -144,9 +148,10 @@ public class MemberController {
         System.out.println(member.toString());
         if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
         System.out.println(member.toString());
-        int result = memberService.updateMember(member);
 
-        if(result > 0) {
+        int result1 = memberService.updateMember(member);
+
+        if(result1 > 0) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('수정되었습니다'); location.href='/bucketlist/members/edit';</script>");
@@ -159,6 +164,14 @@ public class MemberController {
             out.flush();
         }
         return "redirect:/bucketlist/members/edit";
+    }
+
+    @RequestMapping(value="/editAjaxU", method=RequestMethod.POST)
+    @ResponseBody
+    public String editAjaxU(Member member, HttpSession session) throws Exception{
+        memberService.updateMember_U(member);
+        System.out.println("success");
+        return "success";
     }
 
     @DeleteMapping("/edit")

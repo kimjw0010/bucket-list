@@ -10,7 +10,7 @@
 <main class="mt-10 flex justify-center">
     <div class="wrapper bg-white flex justify-center mt-5 w-full">
         <form id="login-form" action="?" method="post" class="w-full mx-16 ">
-            <input type="hidden" name="_method" value="PUT">
+
             <div class="w-full">
                 <div class="filebox mt-8 mb-4 flex justify-center">
                     <c:choose>
@@ -18,14 +18,14 @@
                             <div class="w-40 h-40 object-cover bg-blue-50 rounded-full shadow-xl"></div>
                         </c:when>
                         <c:otherwise>
-                            <img class="w-40 h-40 object-cover bg-white rounded-full shadow-xl" src="<%=src%>" alt="profile"/>
+                            <img class="w-40 h-40 object-cover bg-white rounded-full shadow-xl" src="/images/member/${member.src}" alt="profile"/>
                         </c:otherwise>
                     </c:choose>
 
                     <label for="input-file">
                         <i class="fa-solid fa-circle-plus"></i>
                     </label>
-                    <input type="file" id="input-file" name="imageForm">
+                    <input type="file" id="input-file" name="imageForm" accept="image/gif, image/bmp, image/png, image/jpeg">
                 </div>
                 <div class="mb-4">
                     <spring:bind path="member.name">
@@ -106,6 +106,25 @@
                     return false;
                 }
                 if (confirm('정말 수정하시겠습니까?')) {
+                    var formData = new FormData();
+                    if ($('input[name="imageForm"]').get(0).files[0] != null) {
+                        formData.append('imageForm', $('input[name="imageForm"]').get(0).files[0]);
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "<c:url value='/bucketlist/members/editAjaxU'/>",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        error: function () {
+                            alert("통신 오류1");
+                        },
+                        success: function (members) {
+                            console.log(members);
+                        }
+                    });
+
                     document.getElementById("login-form").enctype = "multipart/form-data";
                     document.getElementsByName("_method")[0].value = "put";
                 }
