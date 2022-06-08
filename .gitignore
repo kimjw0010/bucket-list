@@ -40,3 +40,7 @@ src/main/resources/static/node_modules
 .vscode/
 /src/main/resources/static/node_modules/
 .idea/
+
+### Individual Data ###
+/src/main/resources/static/images/bucketItem/
+/src/main/resources/static/images/member/

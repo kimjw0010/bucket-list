@@ -81,7 +81,7 @@
         </nav>
     </header>
     <main class="mt-10 flex justify-center">
-        <div class="wrapper bg-white flex justify-center mt-5 w-full">
+        <div class="wrapper bg-white flex justify-center mt-5 mb-10 w-full">
             <form id="login-form" action="#" method="#" class="w-full mx-16 ">
                 <div class="w-full">
                     <div class="filebox mt-8 mb-4 flex justify-center">
@@ -110,6 +110,17 @@
                             <input readonly type="email" id="user-email" name="email" value=""
                                 class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                 autocomplete="off" />
+                        </spring:bind>
+                    </div>
+                    <div class="mb-4">
+                        <spring:bind path="member.info">
+                            <label for="user-info"
+                                class="input-label focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400">
+                                한 줄 소개
+                            </label>
+                            <textarea type="text" id="user-info" name="email" value=""
+                                class="resize-none input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
+                                autocomplete="off"></textarea>
                         </spring:bind>
                     </div>
                     <div class="mb-4">
@@ -142,6 +153,7 @@
             </form>
         </div>
     </main>
+    <script type="module" src="../static/js/autoScroll.js"></script>
 </body>
 
 </html>
