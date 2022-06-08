@@ -33,6 +33,6 @@ public class Member {
     private String src;
     private MultipartFile imageForm;
 
-    @Length(max=255)
+    @Length(max=50, message = "info는 최대 50자입니다.")
     private String info;
 }
