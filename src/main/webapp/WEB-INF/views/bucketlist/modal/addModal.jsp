@@ -93,21 +93,6 @@
             alert("모든 입력값을 넣어주세요.");
             return 0;
         }
-
-        $.ajax({
-            type: 'POST',
-            url: "<c:url value='/bucketlist/dashboard/addAjaxU'/>",
-            processData: false,
-            contentType: false,
-            data: formData,
-            error: function () {
-                alert("통신 오류1");
-            },
-            success: function (bucketItems) {
-                console.log("A");
-            }
-        });
-
         $.ajax({
             type: 'POST',
             url: "<c:url value='/bucketlist/dashboard/addAjax'/>",

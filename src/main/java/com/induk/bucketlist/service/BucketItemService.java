@@ -46,18 +46,6 @@ public class BucketItemService {
         return bucketItem.getIdx();
     }
 
-    public Long saveBucketItem_U(BucketItem bucketItem) throws IOException {
-        MultipartFile multipartFile = bucketItem.getImageForm();
-        UploadFile uploadFile = fileStore.storeFile_U(multipartFile, "bucketItem");
-        if(uploadFile == null) {
-            bucketItem.setSrc("");
-        }else{
-            bucketItem.setSrc(uploadFile.getStoreFilename());
-        }
-
-        return bucketItem.getIdx();
-    }
-
     public void updateBucketItem(BucketItem bucketItem) throws IOException {
         UploadFile uploadFile = null;
         System.out.println("bucketItem = " + bucketItem.getSrc());
@@ -68,17 +56,6 @@ public class BucketItemService {
             bucketItem.setSrc(uploadFile.getStoreFilename());
         }
         bucketItemRepository.update(bucketItem);
-    }
-
-    public void updateBucketItem_U(BucketItem bucketItem) throws IOException {
-        UploadFile uploadFile = null;
-        System.out.println("bucketItem = " + bucketItem.getSrc());
-        if(bucketItem.getSrc() == null) {
-            uploadFile = fileStore.storeFile_U(bucketItem.getImageForm(), "bucketItem");
-        }
-        if(uploadFile != null) {
-            bucketItem.setSrc(uploadFile.getStoreFilename());
-        }
     }
 
     public void completeBucketItem(BucketItem bucketItem) {

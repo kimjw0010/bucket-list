@@ -106,24 +106,6 @@
                     return false;
                 }
                 if (confirm('정말 수정하시겠습니까?')) {
-                    var formData = new FormData();
-                    if ($('input[name="imageForm"]').get(0).files[0] != null) {
-                        formData.append('imageForm', $('input[name="imageForm"]').get(0).files[0]);
-
-                        $.ajax({
-                            type: 'POST',
-                            url: "<c:url value='/bucketlist/members/editAjaxU'/>",
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            error: function () {
-                                alert("통신 오류1");
-                            },
-                            success: function (members) {
-                                console.log(members);
-                            }
-                        });
-                    }
 
                     document.getElementById("login-form").enctype = "multipart/form-data";
                     document.getElementsByName("_method")[0].value = "put";

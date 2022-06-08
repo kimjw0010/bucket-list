@@ -149,9 +149,9 @@ public class MemberController {
         if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
         System.out.println(member.toString());
 
-        int result1 = memberService.updateMember(member);
+        int result = memberService.updateMember(member);
 
-        if(result1 > 0) {
+        if(result > 0) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('수정되었습니다'); location.href='/bucketlist/members/edit';</script>");
@@ -167,14 +167,6 @@ public class MemberController {
         session.setAttribute("member", member);
 
         return "redirect:/bucketlist/members/edit";
-    }
-
-    @RequestMapping(value="/editAjaxU", method=RequestMethod.POST)
-    @ResponseBody
-    public String editAjaxU(Member member, HttpSession session) throws Exception{
-        memberService.updateMember_U(member);
-        System.out.println("success");
-        return "success";
     }
 
     @DeleteMapping("/edit")

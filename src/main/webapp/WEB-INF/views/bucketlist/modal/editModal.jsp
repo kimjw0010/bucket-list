@@ -99,20 +99,6 @@
         }
 
         $.ajax({
-            type: 'POST',
-            url: "<c:url value='/bucketlist/dashboard/editAjaxU'/>",
-            processData: false,
-            contentType: false,
-            data: formData,
-            error: function () {
-                alert("통신 오류");
-            },
-            success: function (bucketItems) {
-                console.log("E");
-            }
-        });
-
-        $.ajax({
             type:'POST',
             url : "<c:url value='/bucketlist/dashboard/editAjax'/>",
             processData:false,

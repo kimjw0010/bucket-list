@@ -16,7 +16,6 @@ public class FileStore {
     private String path = System.getProperty("user.dir");
     private String fileDir = path + "\\src\\main\\resources\\static\\images\\";
     private String fileDir_U = path + "\\out\\production\\resources\\static\\images\\";
-    private String storeFilename = "";
     public String getFullPath(String directory, String filename) {
         return fileDir + directory + "\\" + filename;
     }
@@ -44,6 +43,8 @@ public class FileStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
 
+        String storeFilename = createStoreFilename(originalFilename);
+
         multipartFile.transferTo(new File(getFullPath(directory, storeFilename)));
 
         return new UploadFile(originalFilename, storeFilename, directory);
@@ -55,7 +56,8 @@ public class FileStore {
         }
         
         String originalFilename = multipartFile.getOriginalFilename();
-        storeFilename = createStoreFilename(originalFilename);
+
+        String storeFilename = createStoreFilename(originalFilename);
 
         System.out.println(getFullPath_U(directory, storeFilename));
 
