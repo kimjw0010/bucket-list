@@ -8,7 +8,7 @@
     String src = "/images/member/" + member.getSrc();
 %>
 <main class="mt-10 flex justify-center">
-    <div class="wrapper bg-white flex justify-center mt-5 w-full">
+    <div class="wrapper bg-white flex justify-center mt-5 mb-10 w-full">
         <form id="login-form" action="?" method="post" class="w-full mx-16 ">
 
             <div class="w-full">
@@ -47,6 +47,17 @@
                     </spring:bind>
                 </div>
                 <div class="mb-4">
+                    <spring:bind path="member.info">
+                        <label for="user-info"
+                               class="input-label focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400">
+                            한 줄 소개
+                        </label>
+                        <textarea type="text" id="user-info" name="info"
+                                  class="resize-none input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
+                                  autocomplete="off"><%=member.getInfo()%></textarea>
+                    </spring:bind>
+                </div>
+                <div class="mb-4">
                     <spring:bind path="member.password">
                         <label for="user-pw" class="input-label"> 비밀번호 </label>
                         <input type="password" id="user-pw" name="password" value=""
@@ -74,7 +85,7 @@
         </form>
     </div>
 </main>
-
+<script type="module" src="<c:url value="/js/autoScroll.js"/>"></script>
 <script>
     window.onload = () => {
         const getPass = () => {
