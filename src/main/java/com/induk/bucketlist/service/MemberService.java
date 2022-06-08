@@ -28,6 +28,7 @@ public class MemberService {
 
     public Long saveMember(Member member) throws IOException {
         member.setSrc("");
+        member.setInfo("");
         memberRepository.save(member);
         return member.getIdx();
     }

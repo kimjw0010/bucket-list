@@ -30,7 +30,7 @@
                 <div class="mb-4">
                     <spring:bind path="member.name">
                         <label for="user-name" class="input-label"> 이름 </label>
-                        <input type="text" id="user-name" name="name" value="<%=member.getName()%>"
+                        <input type="text" id="user-name" name="name" value="${member.name}"
                                class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                autocomplete="off"/>
                     </spring:bind>
@@ -41,7 +41,7 @@
                                class="input-label focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400">
                             이메일
                         </label>
-                        <input readonly type="email" id="user-email" name="email" value="<%=member.getEmail()%>"
+                        <input readonly type="email" id="user-email" name="email" value="${member.email}"
                                class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                autocomplete="off"/>
                     </spring:bind>
@@ -54,7 +54,7 @@
                         </label>
                         <textarea type="text" id="user-info" name="info"
                                   class="resize-none input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
-                                  autocomplete="off"><%=member.getInfo()%></textarea>
+                                  autocomplete="off">${member.info}</textarea>
                     </spring:bind>
                 </div>
                 <div class="mb-4">
