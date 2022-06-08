@@ -163,6 +163,9 @@ public class MemberController {
             out.println("<script>alert('수정에 실패하였습니다.'); location.href='/bucketlist/members/edit';</script>");
             out.flush();
         }
+
+        session.setAttribute("member", member);
+
         return "redirect:/bucketlist/members/edit";
     }
 

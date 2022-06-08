@@ -72,6 +72,7 @@ public class DashboardController {
         SimpleDateFormat fourteen_format = new SimpleDateFormat("yyyy-MM-dd");
 
         Member member = (Member)session.getAttribute("member");
+        System.out.println("member = " + member);
         bucketItem.setMember_idx(member.getIdx());
         bucketItem.setStatus(false);
         bucketItem.setCreated_at(fourteen_format.format(date_now));

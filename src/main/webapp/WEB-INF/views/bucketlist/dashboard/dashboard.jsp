@@ -12,8 +12,18 @@
                     <div class="w-full mt-44 bg-white shadow-lg transform duration-200 ease-in-out">
                         <div class="flex justify-center px-5 -mt-20">
                             <div>
+                                <%
+                                    Member member = (Member)session.getAttribute("member");
+                                    String profile = "";
+                                    if(member.getSrc().isEmpty()){
+                                        String first_name = member.getName().substring(0,1).toUpperCase();
+                                        profile = "https://ui-avatars.com/api/?name=" + first_name + "&color=7F9CF5&background=EBF4FF";
+                                    } else {
+                                        profile = "/images/member/" + member.getSrc();
+                                    }
+                                %>
                                 <img class="w-44 h-44 object-cover bg-white rounded-full shadow-xl"
-                                     src="/images/member/${member.src}" alt="profile" />
+                                     src="<%=profile%>" alt="profile" />
                             </div>
                         </div>
 
