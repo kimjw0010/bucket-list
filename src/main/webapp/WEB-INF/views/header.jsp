@@ -13,6 +13,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="<c:url value=" /favicon/favicon.ico" />" type="image/x-icon" sizes="16x16">
     <link rel="stylesheet" href="<c:url value=" /css/index.css" />"/>
     <link rel="stylesheet" href="<c:url value=" /dist/output.css" />"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -88,8 +89,6 @@
                             first_name = member.getSrc();
                         }
                     %>
-                    <a class="px-6 py-3 m-1 mb-2 leading-loose text-sm text-center text-white font-semibold bg-mainGreen2-100 hover:bg-mainGreen2-200 rounded-xl"
-                       href="<c:url value="/bucketlist/members/logout"/>"><c:out value="${sessionScope.member.email}"></c:out>  로그아웃</a>
 
                     <!-- user menu -->
                     <div class="mx-4 h-12 w-12 inline-block relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
