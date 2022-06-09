@@ -142,7 +142,7 @@ public class MemberController {
         member.setSrc(m.getSrc());
         member.setIdx(m.getIdx());
         //형식 검사
-        if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")) {
+        if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("info")) {
             return "/bucketlist/members/edit";
         }
         System.out.println(member.toString());
