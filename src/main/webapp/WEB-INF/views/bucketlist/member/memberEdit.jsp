@@ -33,6 +33,7 @@
                         <input type="text" id="user-name" name="name" value="${member.name}"
                                class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                autocomplete="off"/>
+                         <span style="color: red">${status.errorMessage }</span>
                     </spring:bind>
                 </div>
                 <div class="mb-4">
@@ -44,6 +45,7 @@
                         <input readonly type="email" id="user-email" name="email" value="${member.email}"
                                class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                autocomplete="off"/>
+                         <span style="color: red">${status.errorMessage }</span>
                     </spring:bind>
                 </div>
                 <div class="mb-4">
@@ -55,6 +57,7 @@
                         <textarea type="text" id="user-info" name="info"
                                   class="resize-none input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                   autocomplete="off">${member.info}</textarea>
+                         <span style="color: red">${status.errorMessage }</span>
                     </spring:bind>
                 </div>
                 <div class="mb-4">
