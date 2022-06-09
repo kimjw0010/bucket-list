@@ -66,6 +66,9 @@
                         <input type="password" id="user-pw" name="password" value=""
                                class="input-field focus:ring-2 focus:ring-mainGreen2 focus:outline-none invalid:ring-2 invalid:ring-red-400"
                                autocomplete="off"/>
+                        <c:if test="${!member.password.equals('')}">
+                            <span style="color: red">${status.errorMessage }</span>
+                        </c:if>
                     </spring:bind>
                 </div>
                 <div class="mb-4">

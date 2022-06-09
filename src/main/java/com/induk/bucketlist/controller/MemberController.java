@@ -141,9 +141,20 @@ public class MemberController {
         member.setEmail(m.getEmail());
         member.setSrc(m.getSrc());
         member.setIdx(m.getIdx());
+
+        System.out.println(member.getPassword().isEmpty());
+        System.out.println(member.getPassword().equals(""));
         //형식 검사
-        if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("info")) {
-            return "/bucketlist/members/edit";
+        if(member.getPassword().isEmpty() || member.getPassword().equals("")){
+            if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")
+                    || bindingResult.hasFieldErrors("info")) {
+                return "/bucketlist/member/memberEdit";
+            }
+        } else {
+            if(bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name")
+                    || bindingResult.hasFieldErrors("info") || bindingResult.hasFieldErrors("password")) {
+                return "/bucketlist/member/memberEdit";
+            }
         }
         System.out.println(member.toString());
         if(member.getPassword() == null || member.getPassword().equals("")) member.setPassword(m.getPassword());
