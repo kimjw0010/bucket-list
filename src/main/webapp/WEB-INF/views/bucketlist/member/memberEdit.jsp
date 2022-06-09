@@ -10,7 +10,7 @@
 <main class="mt-10 flex justify-center">
     <div class="wrapper bg-white flex justify-center mt-5 mb-10 w-full">
         <form id="login-form" action="?" method="post" class="w-full mx-16 ">
-
+            <input type="hidden" name="_method" value="PUT">
             <div class="w-full">
                 <div class="filebox mt-8 mb-4 flex justify-center">
                     <c:choose>
@@ -119,7 +119,7 @@
                 if (confirm('정말 수정하시겠습니까?')) {
 
                     document.getElementById("login-form").enctype = "multipart/form-data";
-                    document.getElementsByName("_method")[0].value = "put";
+                    document.getElementsByName("_method")[0].value = "post";
                 }
                 return true;
             });
