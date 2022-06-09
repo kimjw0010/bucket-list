@@ -132,7 +132,7 @@ public class MemberController {
 
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public String updateForm(HttpSession session, HttpServletResponse response,
-                             Member member, BindingResult bindingResult,
+                             @Valid Member member, BindingResult bindingResult,
                              @RequestParam(value="password2", required = true) String password2
     ) throws IOException {
         Member sessionMember = (Member)session.getAttribute("member");
